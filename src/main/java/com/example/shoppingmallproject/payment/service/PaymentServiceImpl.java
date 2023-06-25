@@ -12,7 +12,7 @@ public class PaymentServiceImpl implements PaymentService{
     private final PaymentRepository paymentRepository;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public void pay(PaymentRequestDto paymentRequestDto) {
         String payMethod = paymentRequestDto.getPayMethod();
     }
