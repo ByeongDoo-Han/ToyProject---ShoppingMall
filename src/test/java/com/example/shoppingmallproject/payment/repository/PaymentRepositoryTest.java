@@ -1,6 +1,6 @@
 package com.example.shoppingmallproject.payment.repository;
 
-import com.example.shoppingmallproject.payment.entity.PaymentEntity;
+import com.example.shoppingmallproject.payment.entity.Payment;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,14 +18,14 @@ class PaymentRepositoryTest {
     @Test
     public void createPayment(){
         //given
-        final PaymentEntity payment = PaymentEntity.builder()
+        final Payment payment = Payment.builder()
             .paymentId(BigInteger.valueOf(1))
             .payNumber(BigInteger.valueOf(1000))
             .payMethod("카드")
             .build();
 
         //when
-        final PaymentEntity result = paymentRepository.save(payment);
+        final Payment result = paymentRepository.save(payment);
 
         //then
         assertThat(result.getPaymentId()).isEqualTo(1);
