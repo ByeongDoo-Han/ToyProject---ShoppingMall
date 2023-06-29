@@ -5,8 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface PaymentService {
 
-    void pay(PaymentRequestDto paymentRequestDto);
-
     @Transactional
     void pay(PaymentRequestDto paymentRequestDto);
 }
