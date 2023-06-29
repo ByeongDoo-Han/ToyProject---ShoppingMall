@@ -1,27 +1,27 @@
 package com.example.shoppingmallproject.order.entity;
 
 import com.example.shoppingmallproject.payment.entity.Payment;
+import com.example.shoppingmallproject.share.TimeStamped;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.math.BigInteger;
-import java.util.Date;
 
 @Entity
 @Table(name = "ORDERS")
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Orders {
+@Getter
+public class Orders extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private BigInteger id;
+    private Long id;
 //    @Column(name = "ORDER_DATE")
     @Column(name = "USER_ID")
-    private BigInteger userId;
-    @Column(name = "PAYMENT_ID")
-    private BigInteger paymentId;
-    @OneToOne(fetch = FetchType.LAZY)
+    private Long userId;
     @JoinColumn(name = "PAYMENT_ID")
+    private Long paymentId;
+    @OneToOne(fetch = FetchType.LAZY)
     private Payment payment;
 }
