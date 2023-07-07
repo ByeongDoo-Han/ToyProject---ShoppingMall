@@ -8,12 +8,7 @@ class ShoppingmallprojectApplicationTests {
 
     @Test
     void contextLoads() {
-        // test commit
-        // test comit 2
-        // push push
-        //122112
-        //125122145
-        // 12
+
     }
 
 }
