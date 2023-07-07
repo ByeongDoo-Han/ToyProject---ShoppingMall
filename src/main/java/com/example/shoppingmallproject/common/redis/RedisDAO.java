@@ -1,4 +1,4 @@
-package com.example.shoppingmallproject.redis;
+package com.example.shoppingmallproject.common.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
