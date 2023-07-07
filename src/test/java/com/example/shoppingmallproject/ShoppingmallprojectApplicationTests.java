@@ -8,7 +8,7 @@ class ShoppingmallprojectApplicationTests {
 
     @Test
     void contextLoads() {
-
+        // 테스트
     }
 
 }
