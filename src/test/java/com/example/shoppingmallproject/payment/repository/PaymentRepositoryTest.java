@@ -18,7 +18,6 @@ class PaymentRepositoryTest {
     public void createPayment(){
         //given
         final Payment payment = Payment.builder()
-            .id(1L)
             .payNumber(Long.valueOf(1000))
             .payMethod("카드")
             .build();
