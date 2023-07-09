@@ -20,8 +20,7 @@ public class Orders extends TimeStamped {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "order", orphanRemoval = true)
-
+    @OneToOne(fetch = FetchType.LAZY)
     private Payment payment;
 
     private Long orderPrice;
