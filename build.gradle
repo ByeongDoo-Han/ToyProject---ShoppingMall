@@ -43,10 +43,9 @@ dependencies {
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
     //mariaDB
-//    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.1'
+    implementation 'org.mariadb.jdbc:mariadb-java-client' // 버전 명시 없앰
 
-    //h2
-    implementation 'com.h2database:h2'
+    //boot starter jdbc
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
     //JWT
