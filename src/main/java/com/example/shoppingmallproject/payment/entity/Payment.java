@@ -11,11 +11,10 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
-@Builder
 @Table(name = "PAYMENT")
 public class Payment extends TimeStamped {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +34,11 @@ public class Payment extends TimeStamped {
         this.payMethod = payMethod;
     }
 
+    @Builder
+    public Payment(Long totalPrice, String payMethod, Long payNumber, Orders order) {
+        this.totalPrice = totalPrice;
+        this.payMethod = payMethod;
+        this.payNumber = payNumber;
+        this.order = order;
+    }
 }
