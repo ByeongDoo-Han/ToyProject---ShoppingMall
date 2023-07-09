@@ -1,7 +1,7 @@
 package com.example.shoppingmallproject.common.security.jwt;
 
-import com.example.shoppingmallproject.common.security.UserDetailsFactory;
-import com.example.shoppingmallproject.common.security.UserDetailsServiceType;
+import com.example.shoppingmallproject.common.security.userDetails.service.UserDetailsFactory;
+import com.example.shoppingmallproject.common.security.userDetails.service.UserDetailsServiceType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;

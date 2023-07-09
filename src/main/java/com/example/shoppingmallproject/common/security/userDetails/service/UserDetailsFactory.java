@@ -1,4 +1,4 @@
-package com.example.shoppingmallproject.common.security;
+package com.example.shoppingmallproject.common.security.userDetails.service;
 
 import java.util.HashMap;
 import java.util.List;
