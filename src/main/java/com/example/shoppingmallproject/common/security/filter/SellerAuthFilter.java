@@ -20,18 +20,18 @@ public class SellerAuthFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain filterChain) throws ServletException, IOException {
-    try {
-      String sellerToken = jwtUtil.resolveSellerToken(request);
-      if (sellerToken != null) {
-        String loginId = jwtUtil.getLoginIdFromTokenIfValid(sellerToken);
-        Authentication authentication = jwtUtil.createAuthentication(loginId,
-            UserDetailsServiceType.SELLER);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-      }
-    } catch (Exception e) {
-      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return;
-    }
+//    try {
+//      String sellerToken = jwtUtil.resolveSellerToken(request);
+//      if (sellerToken != null) {
+//        String loginId = jwtUtil.getLoginIdFromTokenIfValid(sellerToken);
+//        Authentication authentication = jwtUtil.createAuthentication(loginId,
+//            UserDetailsServiceType.SELLER);
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//      }
+//    } catch (Exception e) {
+//      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//      return;
+//    }
     filterChain.doFilter(request, response);
   }
 }
