@@ -14,8 +14,6 @@ public class User extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
     @Column(nullable = false)
     private String username;
     @Column(nullable = false)
@@ -24,7 +22,7 @@ public class User extends TimeStamped {
     private String password;
     @Column(nullable = false)
     private String phone;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private LinkedHashSet<Address> address; // null 값을 허용하지 않는 Hash Set 조회, 삽입, 삭제 다 O(1)
 
     @Builder

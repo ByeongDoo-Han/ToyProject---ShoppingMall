@@ -19,7 +19,6 @@ public class Orders extends TimeStamped {
     private User user;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "order", orphanRemoval = true)
-
     private Payment payment;
     private Long orderPrice;
 
