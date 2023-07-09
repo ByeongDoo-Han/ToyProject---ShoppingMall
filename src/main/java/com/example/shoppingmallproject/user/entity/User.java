@@ -7,13 +7,12 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity
-@Builder
 @Getter
 @NoArgsConstructor
 @Table(name = "Users")
 public class User extends TimeStamped {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String email;
