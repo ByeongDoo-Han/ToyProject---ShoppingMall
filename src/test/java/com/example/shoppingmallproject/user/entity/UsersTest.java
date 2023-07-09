@@ -22,12 +22,10 @@ public class UsersTest {
     public void onetoonetest(){
         String email = "quden04@gmail.com";
         Address address= Address.builder()
-            .id(1L)
             .userAddress("광명시")
             .userId(1L)
             .build();
         User user1 = User.builder()
-            .id(1L)
             .email(email)
             .password("asdf")
             .phone("010-1234-1234")

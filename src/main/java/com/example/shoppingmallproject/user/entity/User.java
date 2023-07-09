@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -14,10 +16,15 @@ public class User extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "USER_NAME")
     private String username;
+    @Column(name = "EMAIL")
     private String email;
+    @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "PHONE_NUMBER")
     private String phone;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ADDRESS_ID")
     private Address address;

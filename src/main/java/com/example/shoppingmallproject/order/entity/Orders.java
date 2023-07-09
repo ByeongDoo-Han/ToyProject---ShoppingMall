@@ -5,6 +5,8 @@ import com.example.shoppingmallproject.share.TimeStamped;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "ORDERS")
@@ -14,7 +16,8 @@ public class Orders extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @Column(name = "ORDER_DATE")
+    @Column(name = "ORDER_DATE")
+    private LocalDateTime orderedAt;
     @Column(name = "USER_ID")
     private Long userId;
     @JoinColumn(name = "PAYMENT_ID")
@@ -26,5 +29,6 @@ public class Orders extends TimeStamped {
         this.userId = userId;
         this.paymentId = paymentId;
         this.payment = payment;
+        this.orderedAt=getOrderedAt();
     }
 }
