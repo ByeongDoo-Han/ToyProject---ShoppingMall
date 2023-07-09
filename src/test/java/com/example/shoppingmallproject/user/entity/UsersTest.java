@@ -19,7 +19,7 @@ public class UsersTest {
     @Autowired
     private AddressRepository addressRepository;
     @Test
-    public void onetoonetest(){
+    public void oneToOneTest(){
         String email = "quden04@gmail.com";
         Address address= Address.builder()
             .userAddress("광명시")
