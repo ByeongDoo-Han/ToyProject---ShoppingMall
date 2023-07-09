@@ -19,11 +19,10 @@ public class UsersTest {
     @Autowired
     private AddressRepository addressRepository;
     @Test
-    public void onetoonetest(){
+    public void oneToOneTest(){
         String email = "quden04@gmail.com";
         Address address= Address.builder()
             .userAddress("광명시")
-            .userId(1L)
             .build();
         User user1 = User.builder()
             .email(email)
@@ -44,7 +43,6 @@ public class UsersTest {
         System.out.println("user검색2==============");
         User resultUser = usersRepository.findById(1L).get();
         System.out.println("address검색2===========");
-        Address resultAddress = resultUser.getAddress();
         System.out.println("add검색3========");
         Address resultAddress2 = usersRepository.findAddressUsingJoin(resultUser);
     }

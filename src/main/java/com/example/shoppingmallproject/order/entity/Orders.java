@@ -2,33 +2,31 @@ package com.example.shoppingmallproject.order.entity;
 
 import com.example.shoppingmallproject.payment.entity.Payment;
 import com.example.shoppingmallproject.share.TimeStamped;
+import com.example.shoppingmallproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 
 @Entity
-@Table(name = "ORDERS")
-@NoArgsConstructor
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Orders extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "ORDER_DATE")
-    private LocalDateTime orderedAt;
-    @Column(name = "USER_ID")
-    private Long userId;
-    @JoinColumn(name = "PAYMENT_ID")
     private Long paymentId;
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "order", orphanRemoval = true)
+
     private Payment payment;
+    private Long orderPrice;
+
     @Builder
-    public Orders(Long userId, Long paymentId, Payment payment) {
-        this.userId = userId;
-        this.paymentId = paymentId;
+    public Orders(User user, Payment payment, Long orderPrice) {
+        this.user = user;
         this.payment = payment;
-        this.orderedAt=getOrderedAt();
+        this.orderPrice = orderPrice;
     }
 }

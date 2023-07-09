@@ -7,25 +7,26 @@ import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Getter
-@NoArgsConstructor
-@Table(name = "ADDRESS")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Address {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ADDRESS_ID")
     private Long id;
-    @Column
+    @Column(nullable = false)
     private String userAddress;
-    @Column
-    private Long userId;
-    @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private User users;
 
+    @Column(nullable = false)
+    private String zipCode;
+
+    private boolean isDefaultAddress; // 기본 배송지 여부
+
     @Builder
-    public Address(String userAddress, Long userId, User users) {
+    public Address(String userAddress, User users) {
         this.userAddress = userAddress;
-        this.userId = userId;
         this.users = users;
+        this.isDefaultAddress = false;
     }
 }
