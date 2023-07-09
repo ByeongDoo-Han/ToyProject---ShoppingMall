@@ -6,6 +6,8 @@ import com.example.shoppingmallproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 @Getter
@@ -19,6 +21,7 @@ public class Orders extends TimeStamped {
     private User user;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "order", orphanRemoval = true)
+
     private Payment payment;
 
     private Long orderPrice;
