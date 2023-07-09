@@ -1,5 +1,6 @@
 package com.example.shoppingmallproject.product.entity;
 
+import com.example.shoppingmallproject.seller.entity.Seller;
 import com.example.shoppingmallproject.share.TimeStamped;
 import jakarta.persistence.*;
 import lombok.Builder;

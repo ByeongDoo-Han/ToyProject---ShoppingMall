@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,7 +24,7 @@ public class User extends TimeStamped {
     @Column(nullable = false)
     private String phone;
     @OneToMany(mappedBy = "users")
-    private LinkedHashSet<Address> address; // null 값을 허용하지 않는 Hash Set 조회, 삽입, 삭제 다 O(1)
+    private Set<Address> address = new LinkedHashSet<>(); // null 값을 허용하지 않는 Hash Set 조회, 삽입, 삭제 다 O(1)
 
 
     @Builder
