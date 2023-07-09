@@ -14,17 +14,22 @@ public class Product extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String detail;
-    private Long sellerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Seller seller;
+    @Column(nullable = false)
     private Long price;
+    @Column(nullable = false)
     private Long stock;
 
     @Builder
-    public Product(String name, String detail, Long sellerId, Long price, Long stock) {
+    public Product(String name, String detail, Seller seller, Long price, Long stock) {
         this.name = name;
+        this.seller = seller;
         this.detail = detail;
-        this.sellerId = sellerId;
         this.price = price;
         this.stock = stock;
     }
