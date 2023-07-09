@@ -7,12 +7,9 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity
-@Builder
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "Users")
-@Slf4j
 public class User extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +21,13 @@ public class User extends TimeStamped {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ADDRESS_ID")
     private Address address;
+
+    @Builder
+    public User(String username, String email, String password, String phone, Address address) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.address = address;
+    }
 }

@@ -2,19 +2,13 @@ package com.example.shoppingmallproject.address.entity;
 
 import com.example.shoppingmallproject.user.entity.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Getter
-@RequiredArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ADDRESS")
-@Builder
-@Slf4j
 public class Address {
 
     @Id
@@ -27,4 +21,11 @@ public class Address {
     private Long userId;
     @OneToOne(mappedBy = "address", fetch = FetchType.LAZY)
     private User users;
+
+    @Builder
+    public Address(String userAddress, Long userId, User users) {
+        this.userAddress = userAddress;
+        this.userId = userId;
+        this.users = users;
+    }
 }
