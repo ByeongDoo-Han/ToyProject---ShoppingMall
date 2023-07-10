@@ -1,8 +1,7 @@
 package com.example.shoppingmallproject.user.entity;
 
-import com.example.shoppingmallproject.address.entity.Address;
 import com.example.shoppingmallproject.address.repository.AddressRepository;
-import com.example.shoppingmallproject.user.repository.UsersRepository;
+import com.example.shoppingmallproject.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class UsersTest {
     @Autowired
-    private UsersRepository usersRepository;
+    private UserRepository userRepository;
     @Autowired
     private AddressRepository addressRepository;
     @Test
