@@ -10,8 +10,6 @@ import java.util.Optional;
 
 
 @Repository
-public interface UsersRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
-    @Query("SELECT t FROM User t JOIN t.address")
-    Address findAddressUsingJoin(User user);
 }
