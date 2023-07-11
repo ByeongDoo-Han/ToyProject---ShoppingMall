@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UsersRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
-    @Query("SELECT t FROM User t JOIN t.address")
-    Address findAddressUsingJoin(User user);
+//    @Query("SELECT t FROM User t JOIN t.address")
+//    Address findAddressUsingJoin(User user);
+    Optional<User> findByUsername(String username);
 }

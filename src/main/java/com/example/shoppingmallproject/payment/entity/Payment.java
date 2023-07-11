@@ -23,17 +23,17 @@ public class Payment extends TimeStamped {
     private Long payNumber;
 
     @OneToOne(mappedBy = "payment")
-    private Orders order;
+    private Orders orders;
 
     private void setPayMethod(String payMethod){
         this.payMethod = payMethod;
     }
 
     @Builder
-    public Payment(Long totalPrice, String payMethod, Long payNumber, Orders order) {
+    public Payment(Long totalPrice, String payMethod, Long payNumber, Orders orders) {
         this.totalPrice = totalPrice;
         this.payMethod = payMethod;
         this.payNumber = payNumber;
-        this.order = order;
+        this.orders = orders;
     }
 }

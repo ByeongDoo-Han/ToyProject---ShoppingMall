@@ -44,7 +44,7 @@ public class UsersTest {
         User resultUser = usersRepository.findById(1L).get();
         System.out.println("address검색2===========");
         System.out.println("add검색3========");
-        Address resultAddress2 = usersRepository.findAddressUsingJoin(resultUser);
+//        Address resultAddress2 = usersRepository.findAddressUsingJoin(resultUser);
     }
 
 
