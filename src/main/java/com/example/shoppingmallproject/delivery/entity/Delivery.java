@@ -13,13 +13,13 @@ public class Delivery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private Long orderItemId;
+    private Long orderItem;
     @Column(nullable = false)
     private String address;
 
     @Builder
-    public Delivery(Long orderItemId, String address) {
-        this.orderItemId = orderItemId;
+    public Delivery(Long orderItem, String address) {
+        this.orderItem = orderItem;
         this.address = address;
     }
 }
