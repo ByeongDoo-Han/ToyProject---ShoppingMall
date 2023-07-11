@@ -8,26 +8,6 @@ import lombok.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-<<<<<<< HEAD
-@Entity(name = "users")
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User extends TimeStamped {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
-    private String username;
-    @Column(nullable = false)
-    private String email;
-    @Column(nullable = false)
-    private String password;
-    @Column(nullable = false)
-    private String phone;
-    @OneToMany(mappedBy = "users")
-    private Set<Address> address = new LinkedHashSet<>(); // null 값을 허용하지 않는 Hash Set 조회, 삽입, 삭제 다 O(1)
-
-=======
 @Entity(name = "USERS")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -46,7 +26,6 @@ public class User extends TimeStamped {
     @OneToMany(mappedBy = "users")
     private Set<Address> address = new LinkedHashSet<>(); // null 값을 허용하지 않는 Hash Set 조회, 삽입, 삭제 다 O(1)
 
->>>>>>> a4e967323233060d176cd776fcb13de0fae1f8c7
 
     @Builder
     public User(String username, String email, String password, String phone) {

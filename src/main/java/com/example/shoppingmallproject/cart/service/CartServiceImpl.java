@@ -1,8 +1,5 @@
 package com.example.shoppingmallproject.cart.service;
 
-<<<<<<< HEAD
-public class CartServiceImpl implements CartService{
-=======
 import com.example.shoppingmallproject.cart.dto.CartRequestDto;
 import com.example.shoppingmallproject.cart.dto.CartsWithProductsDto;
 import com.example.shoppingmallproject.cart.entity.Cart;
@@ -65,5 +62,4 @@ public class CartServiceImpl implements CartService{
 
         cartRepository.save(cart);
     }
->>>>>>> a4e967323233060d176cd776fcb13de0fae1f8c7
 }

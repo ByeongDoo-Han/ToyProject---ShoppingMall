@@ -1,8 +1,6 @@
 package com.example.shoppingmallproject.cart.service;
 
-<<<<<<< HEAD
-public interface CartService {
-=======
+
 import com.example.shoppingmallproject.cart.dto.CartRequestDto;
 import com.example.shoppingmallproject.cart.dto.CartsWithProductsDto;
 import com.example.shoppingmallproject.user.entity.User;
@@ -17,5 +15,4 @@ public interface CartService {
 
     @Transactional
     void createCart(CartRequestDto dto, User user);
->>>>>>> a4e967323233060d176cd776fcb13de0fae1f8c7
 }

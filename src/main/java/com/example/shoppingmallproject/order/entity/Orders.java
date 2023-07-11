@@ -14,20 +14,10 @@ public class Orders extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-<<<<<<< HEAD
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
-    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
-=======
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
-
     @OneToOne(fetch = FetchType.LAZY)
->>>>>>> a4e967323233060d176cd776fcb13de0fae1f8c7
     private Payment payment;
-
     private Long orderPrice;
 
     @Builder
