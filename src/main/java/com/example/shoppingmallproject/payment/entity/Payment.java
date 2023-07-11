@@ -13,6 +13,7 @@ public class Payment extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private Long totalPrice;
 

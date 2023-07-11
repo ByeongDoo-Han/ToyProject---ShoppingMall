@@ -1,25 +1,20 @@
 package com.example.shoppingmallproject.user.entity;
 
-import com.example.shoppingmallproject.address.entity.Address;
 import com.example.shoppingmallproject.address.repository.AddressRepository;
-import com.example.shoppingmallproject.user.repository.UsersRepository;
-import org.hibernate.Hibernate;
-import org.junit.jupiter.api.Assertions;
+import com.example.shoppingmallproject.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
-import java.util.logging.Logger;
 @SpringBootTest
 public class UsersTest {
     @Autowired
-    private UsersRepository usersRepository;
+    private UserRepository userRepository;
     @Autowired
     private AddressRepository addressRepository;
     @Test
     public void oneToOneTest(){
+<<<<<<< HEAD
         String email = "quden04@gmail.com";
         Address address= Address.builder()
             .userAddress("광명시")
@@ -45,8 +40,8 @@ public class UsersTest {
         System.out.println("address검색2===========");
         System.out.println("add검색3========");
 //        Address resultAddress2 = usersRepository.findAddressUsingJoin(resultUser);
+=======
+
+>>>>>>> a4e967323233060d176cd776fcb13de0fae1f8c7
     }
-
-
-
 }
