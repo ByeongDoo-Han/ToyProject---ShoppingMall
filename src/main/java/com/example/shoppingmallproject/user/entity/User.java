@@ -4,7 +4,7 @@ import com.example.shoppingmallproject.address.entity.Address;
 import com.example.shoppingmallproject.share.TimeStamped;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 

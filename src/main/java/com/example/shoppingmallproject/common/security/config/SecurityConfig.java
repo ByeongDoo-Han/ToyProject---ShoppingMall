@@ -38,7 +38,7 @@ public class SecurityConfig implements WebMvcConfigurer {
 
     http.authorizeHttpRequests()
         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-        .requestMatchers("").permitAll()
+        .requestMatchers("/**").permitAll() // 현재 일단 다 열어놓음
         .anyRequest().authenticated();
 //        .and()
 //        .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())

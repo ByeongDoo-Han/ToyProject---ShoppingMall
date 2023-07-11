@@ -29,7 +29,7 @@ public class CartServiceImpl implements CartService{
 
     /**
      * Carts 와 함께 Products 를 DTO 형태로 함께 리턴합니다. 장바구니는 항상 상품과 함께하기 때문입니다.
-     * @param userId
+     * @param userId 인증객체의 아이디를 주입받습니다.
      */
     @Override
     @Transactional(readOnly = true)
@@ -46,7 +46,7 @@ public class CartServiceImpl implements CartService{
 
     /**
      *
-     * @param dto
+     * @param dto CartRequestDto : productID , quantity 필드를 가집니다.
      * @param user 인증객체가 요청 할 것이므로, 해당 객체의 정보를 받아와서 Cart 객체의 생성에 씁니다.
      */
     @Override

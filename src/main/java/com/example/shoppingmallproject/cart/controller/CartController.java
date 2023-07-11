@@ -15,6 +15,10 @@ import java.util.List;
 public class CartController {
     private final CartService cartService;
 
+    /**
+     * @param user 인증 객체
+     * @return 장바구니 객체와 프로덕트 객체를 리턴합니다.
+     */
     @GetMapping("/carts")
     public List<CartsWithProductsDto> getCartsWithProducts(@AuthenticationPrincipal User user){
         return cartService.getCartsWithProducts(user.getId());

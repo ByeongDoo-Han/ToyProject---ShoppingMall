@@ -3,7 +3,6 @@ package com.example.shoppingmallproject.address.entity;
 import com.example.shoppingmallproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Getter
