@@ -16,7 +16,7 @@ import static com.example.shoppingmallproject.cart.entity.QCart.cart;
 @RequiredArgsConstructor
 public class CartQueryRepositoryImpl implements CartQueryRepository {
     /**
-     * @RequiredArgsConstructer 어노테이션을 활용해서 final 필드 생성자 주입 (QueryDSL 사용을 위함)
+     * 어노테이션 @RequiredArgsConstructor  활용해서 final 필드 생성자 주입 (QueryDSL 사용을 위함)
      */
     private final JPAQueryFactory queryFactory;
 

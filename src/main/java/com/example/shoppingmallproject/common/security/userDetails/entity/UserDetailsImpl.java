@@ -1,7 +1,9 @@
 package com.example.shoppingmallproject.common.security.userDetails.entity;
 
 import com.example.shoppingmallproject.user.entity.User;
+
 import java.util.Collection;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
