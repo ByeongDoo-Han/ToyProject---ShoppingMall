@@ -6,8 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.LinkedHashSet;
+import java.util.Set;
 
-@Entity
+@Entity(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends TimeStamped {
@@ -22,8 +23,9 @@ public class User extends TimeStamped {
     private String password;
     @Column(nullable = false)
     private String phone;
-    @OneToMany(mappedBy = "user")
-    private LinkedHashSet<Address> address; // null 값을 허용하지 않는 Hash Set 조회, 삽입, 삭제 다 O(1)
+    @OneToMany(mappedBy = "users")
+    private Set<Address> address = new LinkedHashSet<>(); // null 값을 허용하지 않는 Hash Set 조회, 삽입, 삭제 다 O(1)
+
 
     @Builder
     public User(String username, String email, String password, String phone) {
