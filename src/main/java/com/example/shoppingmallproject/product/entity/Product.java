@@ -1,12 +1,14 @@
 package com.example.shoppingmallproject.product.entity;
 
-import com.example.shoppingmallproject.cart.entity.Cart;
+import com.example.shoppingmallproject.orderPayDelivery.entity.OrderPayDelivery;
 import com.example.shoppingmallproject.seller.entity.Seller;
 import com.example.shoppingmallproject.share.TimeStamped;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -26,13 +28,16 @@ public class Product extends TimeStamped {
     private Long price;
     @Column(nullable = false)
     private Long stock;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<OrderPayDelivery> orderPayDelivery;
 
     @Builder
-    public Product(String name, String detail, Seller seller, Long price, Long stock) {
+    public Product(String name, String detail, Seller seller, Long price, Long stock, List<OrderPayDelivery> orderPayDelivery) {
         this.name = name;
         this.seller = seller;
         this.detail = detail;
         this.price = price;
         this.stock = stock;
+        this.orderPayDelivery = orderPayDelivery;
     }
 }
