@@ -16,21 +16,15 @@ jobs:
 
     services:
       db:
-        image: mariadb
+        image: calaf1/tenverse
         ports:
-          - 3306:3306 # local : docker port
+          - 3306:3306
         env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-          MYSQL_DATABASE: commerce
-          MYSQL_USER: calaf
-          MYSQL_PASSWORD: 221031
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-        volumes:
-          - mysql-data:/var/lib/mysql
+          DB_HOST: localhost
+          DB_PORT: 3306
+          DB_NAME: commerce
+          DB_USERNAME: calaf
+          DB_PASSWORD: 221031
 
     steps:
     - uses: actions/checkout@v3
@@ -48,6 +42,3 @@ jobs:
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
-
-volumes:
-  mysql-data:
