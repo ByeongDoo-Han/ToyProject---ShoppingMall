@@ -20,7 +20,7 @@ jobs:
         ports:
           - 3306:3306 # local : docker port
         env:
-          MARIADB_ROOT_PASSWORD: your_password_here
+          MARIADB_ROOT_PASSWORD: 221031
           DB_HOST: localhost
           DB_PORT: 3306
           DB_NAME: commerce
