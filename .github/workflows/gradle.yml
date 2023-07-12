@@ -16,7 +16,7 @@ jobs:
 
     services:
       db:
-        image: calaf1/tenverse
+        image: mariadb
         ports:
           - 3306:3306
         env:
