@@ -21,16 +21,16 @@ jobs:
           - 3306:3306 # local : docker port
         env:
           MARIADB_ROOT_PASSWORD: 221031
-          DB_HOST: localhost
+#          DB_HOST: localhost
           DB_PORT: 3306
           DB_NAME: commerce
           DB_USERNAME: calaf
           DB_PASSWORD: 221031
-        options: >-
-          --health-cmd="mysqladmin ping"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
+#        options: >-
+#          --health-cmd="mysqladmin ping"
+#          --health-interval=10s
+#          --health-timeout=5s
+#          --health-retries=3
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
