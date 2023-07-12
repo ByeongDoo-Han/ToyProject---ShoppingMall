@@ -25,6 +25,11 @@ jobs:
           DB_NAME: commerce
           DB_USERNAME: calaf
           DB_PASSWORD: 221031
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
     - uses: actions/checkout@v3
@@ -37,8 +42,6 @@ jobs:
       run: sudo service docker start
     - name: Wait for Database to be Ready
       run: |
-        dockerize -wait tcp://localhost:3306 -timeout 1m
+        while ! docker run --rm --network host mariadb mysqladmin ping -h localhost --silent; do sleep 1; done
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        arguments: build
+      run: ./gradlew build
