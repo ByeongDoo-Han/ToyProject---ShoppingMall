@@ -21,16 +21,11 @@ jobs:
           - 3306:3306 # local : docker port
         env:
           MARIADB_ROOT_PASSWORD: 221031
-#          DB_HOST: localhost
           DB_PORT: 3306
           DB_NAME: commerce
           DB_USERNAME: calaf
           DB_PASSWORD: 221031
-#        options: >-
-#          --health-cmd="mysqladmin ping"
-#          --health-interval=10s
-#          --health-timeout=5s
-#          --health-retries=3
+
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -52,7 +47,7 @@ jobs:
         run: sudo service docker start
       - name: Wait for Database to be Ready
         run: |
-          dockerize -wait tcp://localhost:3306 -timeout 1m
+          while ! nc -z localhost 3306; do sleep 1; done
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
