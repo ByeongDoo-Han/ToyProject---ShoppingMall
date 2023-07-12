@@ -25,6 +25,7 @@ jobs:
           DB_NAME: commerce
           DB_USERNAME: calaf
           DB_PASSWORD: 221031
+          MARIADB_ROOT_PASSWORD : 221031
         options: >-
           --health-cmd="mysqladmin ping"
           --health-interval=10s
