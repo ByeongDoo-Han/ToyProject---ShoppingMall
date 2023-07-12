@@ -22,6 +22,11 @@ jobs:
         env:
           DB_HOST: localhost
           DB_PORT: 3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
     - uses: actions/checkout@v3
@@ -32,6 +37,9 @@ jobs:
         distribution: 'temurin'
     - name: Start Docker
       run: sudo service docker start
+    - name: Wait for Database to be Ready
+      run: |
+        dockerize -wait tcp://localhost:3306 -timeout 1m
     - name: Build with Gradle
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
