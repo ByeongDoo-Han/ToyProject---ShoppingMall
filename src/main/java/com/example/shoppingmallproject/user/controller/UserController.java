@@ -32,7 +32,7 @@ public class UserController {
             URI location = uriBuilder.path("/users/{id}").buildAndExpand(userId).toUri();
             return ResponseEntity.created(location).build();
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Duplicate user exists.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 유저가 존재합니다.");
         }
     }
 }

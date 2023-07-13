@@ -7,6 +7,5 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserService  {
     UserResponseDto getUserById(Long userId);
 
-    @Transactional
     Long userSignUp(UserRequestDto requestDto);
 }
