@@ -54,7 +54,11 @@ public class CartServiceImpl implements CartService{
      */
     @Override
     @Transactional
-    public void createCart(CartRequestDto dto, User user){
+    public Long createCart(CartRequestDto dto, User user){
+        if (cartRepository.isProductAlreadyExist(user.getId(), dto.getProductId())){
+            throw new IllegalArgumentException("이미 추가한 상품입니다.");
+        }
+
         Product product = productService.getProductById(dto.getProductId());
 
         Cart cart = Cart.builder()
@@ -64,6 +68,8 @@ public class CartServiceImpl implements CartService{
                 .build();
 
         cartRepository.save(cart);
+
+        return cart.getId();
     }
     @Override
     @Transactional

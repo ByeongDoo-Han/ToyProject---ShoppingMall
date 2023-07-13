@@ -43,4 +43,12 @@ public class CartQueryRepositoryImpl implements CartQueryRepository {
                 .where(cart.user.id.eq(userId))
                 .fetchFirst());
     }
+    @Override
+    public boolean isProductAlreadyExist(Long userId, Long productId){
+        return queryFactory.select(cart.product.id) // 카트에 존재하는 프로덕트의 아이디를
+                .from(cart) // 카트 테이블에서 찾는다
+                .where(cart.user.id.eq(userId), cart.product.id.eq(productId))
+                // 카트의 유저 아이디와, 카트의 상품 아이디가 모두 맞는 녀석, 즉 유저가 이미 가지고 있는 상품을
+                .fetchFirst() !=null;
+    }
 }
