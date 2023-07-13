@@ -11,4 +11,6 @@ public interface CartQueryRepository {
 
     // QueryDSL 예시를 주기 위해 만든 매서드
     Optional<Cart> findCartWithProductsByUserId(Long userId);
+
+    boolean isProductAlreadyExist(Long userId, Long productId);
 }

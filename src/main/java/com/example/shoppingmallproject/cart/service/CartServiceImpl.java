@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,11 +37,12 @@ public class CartServiceImpl implements CartService{
     @Transactional(readOnly = true)
     public List<CartsWithProductsDto> getCartsWithProducts(Long userId){
         List<Cart> carts = cartRepository.findCartsByUserId(1L);
-        List<Product> products = new ArrayList<>();
 
-        for (Cart cart : carts) {
-            products.add(cart.getProduct());
-        }
+        List<Long> cartIds = carts.stream()
+                .map(Cart::getId)
+                .collect(Collectors.toList());
+
+        List<Product> products = productService.getProductsByCartIds(cartIds);
 
         return new CartsWithProductsDto().toDtoList(carts, products);
     }
@@ -51,7 +54,11 @@ public class CartServiceImpl implements CartService{
      */
     @Override
     @Transactional
-    public void createCart(CartRequestDto dto, User user){
+    public Long createCart(CartRequestDto dto, User user){
+        if (cartRepository.isProductAlreadyExist(user.getId(), dto.getProductId())){
+            throw new IllegalArgumentException("이미 추가한 상품입니다.");
+        }
+
         Product product = productService.getProductById(dto.getProductId());
 
         Cart cart = Cart.builder()
@@ -61,5 +68,20 @@ public class CartServiceImpl implements CartService{
                 .build();
 
         cartRepository.save(cart);
+
+        return cart.getId();
+    }
+    @Override
+    @Transactional
+    public void deleteCart(Long cartId, User user){
+        Cart cart = cartRepository.findById(cartId).orElseThrow(
+                () -> new NoSuchElementException("해당 항목이 존재하지 않습니다.")
+        );
+
+        if (cart.getUser().getEmail().equals(user.getEmail())){
+            cartRepository.delete(cart);
+        } else {
+            throw new IllegalArgumentException("잘못된 접근입니다.");
+        }
     }
 }
