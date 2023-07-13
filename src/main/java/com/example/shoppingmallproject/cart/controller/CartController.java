@@ -3,6 +3,7 @@ package com.example.shoppingmallproject.cart.controller;
 import com.example.shoppingmallproject.cart.dto.CartRequestDto;
 import com.example.shoppingmallproject.cart.dto.CartsWithProductsDto;
 import com.example.shoppingmallproject.cart.service.CartService;
+import com.example.shoppingmallproject.common.security.userDetails.entity.UserDetailsImpl;
 import com.example.shoppingmallproject.user.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +27,9 @@ public class CartController {
      * @return 장바구니 객체와 프로덕트 객체를 리턴합니다.
      */
     @GetMapping("/carts")
-    public ResponseEntity<List<CartsWithProductsDto>> getCartsWithProducts(@PathVariable @AuthenticationPrincipal User user) {
+    public ResponseEntity<List<CartsWithProductsDto>> getCartsWithProducts(@AuthenticationPrincipal UserDetailsImpl user) {
         try {
-            List<CartsWithProductsDto> cartsWithProducts = cartService.getCartsWithProducts(user.getId());
+            List<CartsWithProductsDto> cartsWithProducts = cartService.getCartsWithProducts(user.getUser().getId());
             return ResponseEntity.ok(cartsWithProducts);
         } catch (NoSuchElementException e) {
             return ResponseEntity.noContent().build();
@@ -36,9 +37,9 @@ public class CartController {
     }
 
     @PostMapping("/carts")
-    public ResponseEntity<String> createCart(@RequestBody CartRequestDto dto, @AuthenticationPrincipal User user, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<String> createCart(@RequestBody CartRequestDto dto, @AuthenticationPrincipal UserDetailsImpl userDetails, UriComponentsBuilder uriBuilder){
         try {
-            Long cartId = cartService.createCart(dto, user);
+            Long cartId = cartService.createCart(dto, userDetails.getUser());
             URI location = uriBuilder.path("/carts/{id}").buildAndExpand(cartId).toUri();
             return ResponseEntity.created(location).build();
         } catch (IllegalArgumentException e){
@@ -49,9 +50,9 @@ public class CartController {
     }
 
     @DeleteMapping("/carts/{cartId}")
-    public ResponseEntity<String> deleteCart(@PathVariable Long cartId, @AuthenticationPrincipal User user) {
+    public ResponseEntity<String> deleteCart(@PathVariable Long cartId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         try {
-            cartService.deleteCart(cartId, user);
+            cartService.deleteCart(cartId, userDetails.getUser());
             return ResponseEntity.ok("장바구니 항목이 삭제되었습니다.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 접근입니다.");
