@@ -1,7 +1,7 @@
 package com.example.shoppingmallproject.user.entity;
 
 import com.example.shoppingmallproject.address.entity.Address;
-import com.example.shoppingmallproject.user.repository.UsersRepository;
+import com.example.shoppingmallproject.user.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
@@ -19,7 +19,7 @@ import java.util.Optional;
 class UserAddressTest {
 
     @Autowired
-    UsersRepository usersRepository;
+    UserRepository usersRepository;
 
     @DisplayName("ALL 결과 테스트")
     @Test
