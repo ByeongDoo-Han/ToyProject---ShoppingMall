@@ -1,6 +1,7 @@
 package com.example.shoppingmallproject.user.dto;
 
 import com.example.shoppingmallproject.user.entity.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ public class UserResponseDto {
     private String username;
     private String phone;
 
+    @Builder
     private UserResponseDto(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
