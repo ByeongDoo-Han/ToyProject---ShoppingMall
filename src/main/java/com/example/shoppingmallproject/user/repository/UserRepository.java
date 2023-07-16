@@ -11,4 +11,5 @@ import static com.example.shoppingmallproject.user.entity.QUser.user;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
+    boolean existsByEmail(String email);
 }
