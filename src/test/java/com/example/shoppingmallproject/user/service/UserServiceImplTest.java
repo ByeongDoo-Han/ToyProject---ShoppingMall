@@ -108,4 +108,5 @@ class UserServiceImplTest {
         verify(userRepository, times(1)).findByEmail(requestDto.getEmail());
         verify(userRepository, never()).save(any(User.class));
     }
+
 }

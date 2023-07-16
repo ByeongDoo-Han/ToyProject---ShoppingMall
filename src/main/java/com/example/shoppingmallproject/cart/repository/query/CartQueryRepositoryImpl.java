@@ -1,12 +1,14 @@
 package com.example.shoppingmallproject.cart.repository.query;
 
 import com.example.shoppingmallproject.cart.entity.Cart;
+
 import com.example.shoppingmallproject.product.entity.QProduct;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import static com.example.shoppingmallproject.cart.entity.QCart.cart;
@@ -35,6 +37,7 @@ public class CartQueryRepositoryImpl implements CartQueryRepository {
     }
 
     // QueryDSL 예시를 주기 위해 만든 매서드
+
     @Override
     public Optional<Cart> findCartWithProductsByUserId(Long userId){
         return Optional.ofNullable(queryFactory

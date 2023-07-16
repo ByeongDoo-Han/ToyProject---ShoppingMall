@@ -1,11 +1,14 @@
 package com.example.shoppingmallproject.user.entity;
 
 import com.example.shoppingmallproject.address.entity.Address;
+import com.example.shoppingmallproject.payment.entity.Payment;
 import com.example.shoppingmallproject.share.TimeStamped;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "USERS")
@@ -25,7 +28,8 @@ public class User extends TimeStamped {
     private String phone;
     @OneToMany(mappedBy = "users")
     private Set<Address> address = new LinkedHashSet<>(); // null 값을 허용하지 않는 Hash Set 조회, 삽입, 삭제 다 O(1)
-
+    @OneToMany(mappedBy = "users")
+    private List<Payment> payment = new ArrayList<>();
 
     @Builder
     public User(String username, String email, String password, String phone) {

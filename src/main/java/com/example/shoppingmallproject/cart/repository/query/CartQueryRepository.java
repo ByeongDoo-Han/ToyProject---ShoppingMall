@@ -3,6 +3,7 @@ package com.example.shoppingmallproject.cart.repository.query;
 import com.example.shoppingmallproject.cart.entity.Cart;
 
 import java.util.List;
+
 import java.util.Optional;
 
 public interface CartQueryRepository {

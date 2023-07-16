@@ -1,9 +1,13 @@
 package com.example.shoppingmallproject.payment.entity;
 
 import com.example.shoppingmallproject.order.entity.Orders;
+import com.example.shoppingmallproject.orderPayDelivery.entity.OrderPayDelivery;
 import com.example.shoppingmallproject.share.TimeStamped;
+import com.example.shoppingmallproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 
 @Entity
@@ -23,18 +27,21 @@ public class Payment extends TimeStamped {
     @Column(nullable = false)
     private Long payNumber;
 
-    @OneToOne(mappedBy = "payment")
-    private Orders order;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<OrderPayDelivery> orderPayDelivery;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User users;
 
     private void setPayMethod(String payMethod){
         this.payMethod = payMethod;
     }
 
     @Builder
-    public Payment(Long totalPrice, String payMethod, Long payNumber, Orders order) {
+    public Payment(Long totalPrice, String payMethod, Long payNumber, List<OrderPayDelivery> orderPayDelivery) {
         this.totalPrice = totalPrice;
         this.payMethod = payMethod;
         this.payNumber = payNumber;
-        this.order = order;
+        this.orderPayDelivery = orderPayDelivery;
     }
 }

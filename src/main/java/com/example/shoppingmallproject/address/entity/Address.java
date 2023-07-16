@@ -23,9 +23,10 @@ public class Address {
     private boolean isDefaultAddress; // 기본 배송지 여부
 
     @Builder
-    public Address(String userAddress, User users) {
+    public Address(String userAddress, User users, String zipCode) {
         this.userAddress = userAddress;
         this.users = users;
+        this.zipCode = zipCode;
         this.isDefaultAddress = false;
     }
 }

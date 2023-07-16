@@ -4,6 +4,7 @@ import com.example.shoppingmallproject.user.dto.UserRequestDto;
 import com.example.shoppingmallproject.user.dto.UserResponseDto;
 import com.example.shoppingmallproject.user.entity.User;
 import com.example.shoppingmallproject.user.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,18 +29,19 @@ public class UserServiceImpl implements UserService{
         ));
     }
     @Override
-    @Transactional
-    public Long userSignUp(UserRequestDto requestDto) {
+    @Transactional(readOnly = true)
+    public UserResponseDto userSignUp(UserRequestDto requestDto) {
         String email = requestDto.getEmail();
         String password = passwordEncoder.encode(requestDto.getPassword());
         String username = requestDto.getUsername();
         String phone = requestDto.getPhone();
 
-        Optional<User> found = userRepository.findByEmail(email);
+//        Optional<User> found = userRepository.findByEmail(email);
+        validateEmail(email);
 
-        if (found.isPresent()) {
-            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
-        }
+//        if (found.isPresent()) {
+//            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+//        }
 
         User user = User.builder()
                 .phone(phone)
@@ -49,7 +51,19 @@ public class UserServiceImpl implements UserService{
                 .build();
 
         userRepository.save(user);
+        return UserResponseDto.of(user);
+//        return user.getId(); // 생성되는 유저의 id를 반환해서, Controller 단에서 생성된 유저의 URI 를 정확히 참조하도록 함.
+    }
 
-        return user.getId(); // 생성되는 유저의 id를 반환해서, Controller 단에서 생성된 유저의 URI 를 정확히 참조하도록 함.
+    @Transactional
+    public void validateEmail(String email) {
+        if(userRepository.existsByEmail(email)){
+            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+        }
+    }
+
+    @Override
+    public UserResponseDto userSignIn(UserRequestDto userRequestDto, HttpServletResponse response) {
+        return null;
     }
 }
