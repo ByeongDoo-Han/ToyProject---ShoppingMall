@@ -3,6 +3,7 @@ package com.example.shoppingmallproject.payment.entity;
 import com.example.shoppingmallproject.order.entity.Orders;
 import com.example.shoppingmallproject.orderPayDelivery.entity.OrderPayDelivery;
 import com.example.shoppingmallproject.share.TimeStamped;
+import com.example.shoppingmallproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,6 +29,9 @@ public class Payment extends TimeStamped {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<OrderPayDelivery> orderPayDelivery;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User users;
 
     private void setPayMethod(String payMethod){
         this.payMethod = payMethod;
