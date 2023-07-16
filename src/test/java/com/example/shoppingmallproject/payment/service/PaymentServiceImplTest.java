@@ -65,9 +65,6 @@ class PaymentServiceImplTest {
             .password(passwordEncoder.encode(password))
             .build();
 
-        payment = Payment.builder()
-            .
-            .build();
 
         requestDto = new UserRequestDto();
         requestDto.setEmail("test@example.com");

@@ -6,7 +6,9 @@ import com.example.shoppingmallproject.user.service.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -24,15 +26,19 @@ public class UserController {
     }
 
     @PostMapping("/users/signup")
-    public ResponseEntity<String> userSignUp(@RequestBody UserRequestDto requestDto, UriComponentsBuilder uriBuilder) {
-        try {
-            // 사용자를 회원 가입 시키고, userId 를 리턴하는 매서드
-            Long userId = userService.userSignUp(requestDto);
-            // 생성된 리소스에 접근 가능한 URI 를 created() 안에 넣어서 확인 가능하게 함.
-            URI location = uriBuilder.path("/users/{id}").buildAndExpand(userId).toUri();
-            return ResponseEntity.created(location).build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 유저가 존재합니다.");
-        }
+//    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<UserResponseDto> userSignUp(@Validated @RequestBody UserRequestDto requestDto) {
+//        try {
+//            // 사용자를 회원 가입 시키고, userId 를 리턴하는 매서드
+//            Long userId = userService.userSignUp(requestDto);
+//            // 생성된 리소스에 접근 가능한 URI 를 created() 안에 넣어서 확인 가능하게 함.
+//            URI location = uriBuilder.path("/users/{id}").buildAndExpand(userId).toUri();
+//            return ResponseEntity.created(location).build();
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 유저가 존재합니다.");
+//        }
+        UserResponseDto userResponseDto = userService.userSignUp(requestDto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userResponseDto);
     }
 }

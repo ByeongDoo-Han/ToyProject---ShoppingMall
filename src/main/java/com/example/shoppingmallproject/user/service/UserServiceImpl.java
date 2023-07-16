@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService{
     }
     @Override
     @Transactional(readOnly = true)
-    public void userSignUp(UserRequestDto requestDto) {
+    public UserResponseDto userSignUp(UserRequestDto requestDto) {
         String email = requestDto.getEmail();
         String password = passwordEncoder.encode(requestDto.getPassword());
         String username = requestDto.getUsername();
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService{
                 .build();
 
         userRepository.save(user);
-
+        return UserResponseDto.of(user);
 //        return user.getId(); // 생성되는 유저의 id를 반환해서, Controller 단에서 생성된 유저의 URI 를 정확히 참조하도록 함.
     }
 
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void userSignIn(UserRequestDto userRequestDto, HttpServletResponse response) {
-
+    public UserResponseDto userSignIn(UserRequestDto userRequestDto, HttpServletResponse response) {
+        return null;
     }
 }

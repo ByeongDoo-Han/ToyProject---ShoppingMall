@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UserService  {
     UserResponseDto getUserById(Long userId);
 
-    void userSignUp(UserRequestDto userRequestDto);
+    UserResponseDto userSignUp(UserRequestDto userRequestDto);
 
-    void userSignIn(UserRequestDto userRequestDto, HttpServletResponse response);
+    UserResponseDto userSignIn(UserRequestDto userRequestDto, HttpServletResponse response);
 }
