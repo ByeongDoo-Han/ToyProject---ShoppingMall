@@ -31,13 +31,12 @@ public class PaymentServiceImpl implements PaymentService{
     public List<PaymentsResultDto> getPayments(User user) {
         Long userId = user.getId();
         List<Payment> list = paymentRepository.findPaymentsByUserId(userId);
-        List<PaymentsResultDto> result = list.stream()
+        return list.stream()
             .map( m-> PaymentsResultDto.builder()
                 .id(m.getId())
                 .payNumber(m.getPayNumber())
                 .totalPrice(m.getTotalPrice())
                 .payMethod(m.getPayMethod())
                 .build()).collect(Collectors.toList());
-        return result;
     }
 }
