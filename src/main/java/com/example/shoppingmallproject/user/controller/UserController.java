@@ -1,12 +1,20 @@
 package com.example.shoppingmallproject.user.controller;
 
+import com.example.shoppingmallproject.common.security.jwt.JwtUtil;
+import com.example.shoppingmallproject.common.security.userDetails.entity.UserDetailsImpl;
+import com.example.shoppingmallproject.user.dto.SignInRequestDto;
 import com.example.shoppingmallproject.user.dto.SignUpRequestDto;
+import com.example.shoppingmallproject.user.dto.TokenResponseDto;
 import com.example.shoppingmallproject.user.dto.UserResponseDto;
 import com.example.shoppingmallproject.user.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -34,5 +42,24 @@ public class UserController {
 //        }
         UserResponseDto userResponseDto = userService.signUp(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponseDto);
+    }
+
+    @PostMapping("/user/signin")
+    public TokenResponseDto signIn(@RequestBody SignInRequestDto signInRequestDto)
+        throws JsonProcessingException {
+        return userService.signIn(signInRequestDto);
+    }
+
+    @PostMapping("/user/signout")
+    public ResponseEntity<String> signOut(@AuthenticationPrincipal UserDetails userDetails){
+        userService.signOut(userDetails.getUsername());
+        return new ResponseEntity<>("로그아웃 성공", HttpStatus.OK);
+    }
+
+    @PostMapping("user/reissue")
+    public TokenResponseDto reissue(HttpServletRequest httpServletRequest)
+        throws JsonProcessingException {
+        String refreshToken = JwtUtil.resolveToken(httpServletRequest, JwtUtil.REFRESH_HEADER);
+        return userService.reissue(refreshToken);
     }
 }

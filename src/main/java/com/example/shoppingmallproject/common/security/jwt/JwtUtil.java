@@ -48,7 +48,7 @@ public class JwtUtil {
     return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
   }
 
-  public String resolveToken(HttpServletRequest request, String header) {
+  public static String resolveToken(HttpServletRequest request, String header) {
     String bearerToken = request.getHeader(header);
     if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
       return bearerToken.substring(7);
