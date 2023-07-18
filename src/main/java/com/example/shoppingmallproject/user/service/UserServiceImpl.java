@@ -1,25 +1,31 @@
 package com.example.shoppingmallproject.user.service;
 
-import com.example.shoppingmallproject.user.dto.UserRequestDto;
+import com.example.shoppingmallproject.common.redis.RedisDAO;
+import com.example.shoppingmallproject.common.security.jwt.JwtUtil;
+import com.example.shoppingmallproject.user.dto.SignInRequestDto;
+import com.example.shoppingmallproject.user.dto.SignUpRequestDto;
+import com.example.shoppingmallproject.user.dto.TokenResponseDto;
 import com.example.shoppingmallproject.user.dto.UserResponseDto;
 import com.example.shoppingmallproject.user.entity.User;
 import com.example.shoppingmallproject.user.repository.UserRepository;
-import jakarta.servlet.http.HttpServletResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.validation.constraints.NotNull;
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
+    private final RedisDAO redisDAO;
+    private final JwtUtil jwtUtil;
 
     @Override
     @Transactional(readOnly = true)
@@ -29,41 +35,66 @@ public class UserServiceImpl implements UserService{
         ));
     }
     @Override
-    @Transactional(readOnly = true)
-    public UserResponseDto userSignUp(UserRequestDto requestDto) {
-        String email = requestDto.getEmail();
-        String password = passwordEncoder.encode(requestDto.getPassword());
-        String username = requestDto.getUsername();
-        String phone = requestDto.getPhone();
-
-//        Optional<User> found = userRepository.findByEmail(email);
-        validateEmail(email);
-
-//        if (found.isPresent()) {
-//            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
-//        }
-
-        User user = User.builder()
-                .phone(phone)
-                .email(email)
-                .username(username)
-                .password(password)
-                .build();
-
+    @Transactional
+    public UserResponseDto signUp(SignUpRequestDto requestDto) {
+        if(userRepository.existsByEmail(requestDto.getEmail())){
+            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+        }
+        String encodingPassword = passwordEncoder.encode(requestDto.getPassword());
+        User user = requestDto.toEntity(encodingPassword);
         userRepository.save(user);
         return UserResponseDto.of(user);
 //        return user.getId(); // 생성되는 유저의 id를 반환해서, Controller 단에서 생성된 유저의 URI 를 정확히 참조하도록 함.
     }
 
+
+    @Override
     @Transactional
-    public void validateEmail(String email) {
-        if(userRepository.existsByEmail(email)){
-            throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
+    public TokenResponseDto signIn(SignInRequestDto signInRequestDto) throws JsonProcessingException {
+        // 보안을 위해 아이디&비밀번호 관련 응답은 통일되게 설정하였음.
+        User user = userRepository.findByEmail(signInRequestDto.getEmail())
+            .orElseThrow(() -> new IllegalArgumentException("아이디와 비밀번호를 확인해주세요"));
+        if(!passwordEncoder.matches(signInRequestDto.getPassword(), user.getPassword())){
+            throw new IllegalArgumentException("아이디와 비밀번호를 확인해주세요");
         }
+        String accessToken = jwtUtil.createToken(user.getEmail(), JwtUtil.ACCESS_TOKEN_TIME);
+        String refreshToken = jwtUtil.createToken(user.getEmail(), JwtUtil.REFRESH_TOKEN_TIME);
+        saveRefreshTokenToRedis(user.getEmail(), refreshToken);
+        return new TokenResponseDto(accessToken, refreshToken);
     }
 
     @Override
-    public UserResponseDto userSignIn(UserRequestDto userRequestDto, HttpServletResponse response) {
-        return null;
+    @Transactional
+    public void signOut(String email) {
+        redisDAO.deleteValues(email);
     }
+
+    @Override
+    @Transactional
+    public TokenResponseDto reissue(String refreshToken) throws JsonProcessingException {
+        String email = jwtUtil.getLoginIdFromToken(refreshToken);
+        if(!isSameRefreshTokenInRedis(email, refreshToken)){
+            throw new IllegalArgumentException("토큰 불일치");
+        }
+        String newAccessToken = jwtUtil.createToken(email, JwtUtil.ACCESS_TOKEN_TIME);
+        String newRefreshToken = jwtUtil.createToken(email, JwtUtil.REFRESH_TOKEN_TIME);
+        saveRefreshTokenToRedis(email, newRefreshToken);
+        return new TokenResponseDto(newAccessToken, newRefreshToken);
+    }
+
+    private void saveRefreshTokenToRedis(String email, String refreshToken)
+        throws JsonProcessingException {
+        redisDAO.setValues(email, refreshToken.substring(7),
+            Duration.ofMillis(JwtUtil.REFRESH_TOKEN_TIME));
+    }
+
+    private boolean isSameRefreshTokenInRedis(String email, String refreshToken)
+        throws JsonProcessingException {
+        String redisRefreshToken = redisDAO.getValues(email, String.class);
+        if (redisRefreshToken != null){
+            return redisRefreshToken.equals(refreshToken);
+        }
+        return false;
+    }
+
 }

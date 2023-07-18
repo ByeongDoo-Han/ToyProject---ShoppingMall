@@ -1,14 +1,16 @@
 package com.example.shoppingmallproject.user.service;
 
-import com.example.shoppingmallproject.user.dto.UserRequestDto;
+import com.example.shoppingmallproject.user.dto.SignInRequestDto;
+import com.example.shoppingmallproject.user.dto.SignUpRequestDto;
+import com.example.shoppingmallproject.user.dto.TokenResponseDto;
 import com.example.shoppingmallproject.user.dto.UserResponseDto;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.transaction.annotation.Transactional;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface UserService  {
     UserResponseDto getUserById(Long userId);
-
-    UserResponseDto userSignUp(UserRequestDto userRequestDto);
-
-    UserResponseDto userSignIn(UserRequestDto userRequestDto, HttpServletResponse response);
+    UserResponseDto signUp(SignUpRequestDto signUpRequestDto);
+    TokenResponseDto signIn(SignInRequestDto signInRequestDto) throws JsonProcessingException;
+    void signOut(String email);
+    TokenResponseDto reissue(String refreshToken) throws JsonProcessingException;
 }
+
