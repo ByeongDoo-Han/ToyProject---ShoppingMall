@@ -1,18 +1,13 @@
 package com.example.shoppingmallproject.user.controller;
 
-import com.example.shoppingmallproject.user.dto.UserRequestDto;
+import com.example.shoppingmallproject.user.dto.SignUpRequestDto;
 import com.example.shoppingmallproject.user.dto.UserResponseDto;
 import com.example.shoppingmallproject.user.service.UserService;
-import lombok.Getter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,9 +20,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
-    @PostMapping("/users/signup")
+    @PostMapping("/user/signup")
 //    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UserResponseDto> userSignUp(@Validated @RequestBody UserRequestDto requestDto) {
+    public ResponseEntity<UserResponseDto> signUp(@Valid @RequestBody SignUpRequestDto requestDto) {
 //        try {
 //            // 사용자를 회원 가입 시키고, userId 를 리턴하는 매서드
 //            Long userId = userService.userSignUp(requestDto);
@@ -37,8 +32,7 @@ public class UserController {
 //        } catch (IllegalArgumentException e) {
 //            return ResponseEntity.status(HttpStatus.CONFLICT).body("중복된 유저가 존재합니다.");
 //        }
-        UserResponseDto userResponseDto = userService.userSignUp(requestDto);
-
+        UserResponseDto userResponseDto = userService.signUp(requestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(userResponseDto);
     }
 }

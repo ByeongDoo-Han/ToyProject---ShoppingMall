@@ -1,29 +1,21 @@
 package com.example.shoppingmallproject.payment.service;
 
 import com.example.shoppingmallproject.address.entity.Address;
-import com.example.shoppingmallproject.order.entity.Orders;
-import com.example.shoppingmallproject.orderPayDelivery.entity.OrderPayDelivery;
-import com.example.shoppingmallproject.payment.dto.PaymentsResultDto;
 import com.example.shoppingmallproject.payment.entity.Payment;
 import com.example.shoppingmallproject.payment.repository.PaymentRepository;
-import com.example.shoppingmallproject.user.dto.UserRequestDto;
+import com.example.shoppingmallproject.user.dto.SignUpRequestDto;
 import com.example.shoppingmallproject.user.entity.User;
 import com.example.shoppingmallproject.user.repository.UserRepository;
 import com.example.shoppingmallproject.user.service.UserServiceImpl;
-import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.LinkedHashSet;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class PaymentServiceImplTest {
@@ -41,7 +33,7 @@ class PaymentServiceImplTest {
     private User user;
     private Payment payment;
 
-    private UserRequestDto requestDto;
+    private SignUpRequestDto requestDto;
 
     @BeforeEach
     void setUp() {
@@ -66,7 +58,7 @@ class PaymentServiceImplTest {
             .build();
 
 
-        requestDto = new UserRequestDto();
+        requestDto = new SignUpRequestDto();
         requestDto.setEmail("test@example.com");
         requestDto.setPassword("password");
         requestDto.setUsername("testuser");
