@@ -1,11 +1,10 @@
 package com.example.shoppingmallproject.user.controller;
 
-import com.example.shoppingmallproject.user.dto.UserRequestDto;
+import com.example.shoppingmallproject.user.dto.SignUpRequestDto;
 import com.example.shoppingmallproject.user.dto.UserResponseDto;
 import com.example.shoppingmallproject.user.entity.User;
 import com.example.shoppingmallproject.user.service.UserService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -47,7 +46,7 @@ class UserControllerTest {
     void userSignUpTest() throws Exception {
 
         //given
-        given(userController.userSignUp(UserRequestDto.builder()
+        given(userController.signUp(SignUpRequestDto.builder()
             .username(username)
             .password(password)
             .email(email)
@@ -73,7 +72,7 @@ class UserControllerTest {
             .phone(phone)
             .build();
         UserResponseDto userResponseDto = UserResponseDto.of(user1);
-        UserRequestDto userRequestDto = UserRequestDto.builder()
+        SignUpRequestDto signUpRequestDto = SignUpRequestDto.builder()
             .username(username)
             .email(email)
             .password(password)
@@ -94,7 +93,7 @@ class UserControllerTest {
             .andExpect(jsonPath("$.phone").exists())
             .andDo(print());
 
-        verify(userController).userSignUp(userRequestDto);
+        verify(userController).signUp(signUpRequestDto);
     }
 
 }

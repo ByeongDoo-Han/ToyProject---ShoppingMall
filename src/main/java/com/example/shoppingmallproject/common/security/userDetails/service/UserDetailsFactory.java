@@ -10,14 +10,14 @@ public class UserDetailsFactory {
 
   private final HashMap<UserDetailsServiceType, UserDetailsServiceAddGetType> serviceMap = new HashMap<>();
 
-  public UserDetailsFactory(List<UserDetailsServiceAddGetType> userDetailsServiceAddGetTypes) {
-    for(UserDetailsServiceAddGetType userDetailsServiceAddGetType : userDetailsServiceAddGetTypes){
-      serviceMap.put(userDetailsServiceAddGetType.getServiceType(), userDetailsServiceAddGetType);
+  public UserDetailsFactory(List<UserDetailsServiceAddGetType> serviceList) {
+    for(UserDetailsServiceAddGetType service : serviceList){
+      serviceMap.put(service.getServiceType(), service);
     }
   }
 
-  public UserDetails getUserDetails(String loginId,UserDetailsServiceType userDetailsServiceType){
-    UserDetailsServiceAddGetType userDetailsService = serviceMap.get(userDetailsServiceType);
+  public UserDetails getUserDetails(String loginId,UserDetailsServiceType serviceType){
+    UserDetailsServiceAddGetType userDetailsService = serviceMap.get(serviceType);
     return userDetailsService.loadUserByUsername(loginId);
   }
 

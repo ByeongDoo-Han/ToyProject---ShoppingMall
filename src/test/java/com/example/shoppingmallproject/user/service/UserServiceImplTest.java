@@ -1,6 +1,6 @@
 package com.example.shoppingmallproject.user.service;
 
-import com.example.shoppingmallproject.user.dto.UserRequestDto;
+import com.example.shoppingmallproject.user.dto.SignUpRequestDto;
 import com.example.shoppingmallproject.user.dto.UserResponseDto;
 import com.example.shoppingmallproject.user.entity.User;
 import com.example.shoppingmallproject.user.repository.UserRepository;
@@ -29,7 +29,7 @@ class UserServiceImplTest {
 
     private User user;
 
-    private UserRequestDto requestDto;
+    private SignUpRequestDto requestDto;
 
     @BeforeEach
     void setUp() {
@@ -45,7 +45,7 @@ class UserServiceImplTest {
                 .password(passwordEncoder.encode("password"))
                 .build();
 
-        requestDto = new UserRequestDto();
+        requestDto = new SignUpRequestDto();
         requestDto.setEmail("test@example.com");
         requestDto.setPassword("password");
         requestDto.setUsername("testuser");
@@ -90,7 +90,7 @@ class UserServiceImplTest {
         when(passwordEncoder.encode(requestDto.getPassword())).thenReturn("encodedPassword");
 
         // When
-        userService.userSignUp(requestDto);
+        userService.signUp(requestDto);
 
         // Then
         verify(userRepository, times(1)).findByEmail(requestDto.getEmail());
@@ -104,7 +104,7 @@ class UserServiceImplTest {
         when(userRepository.findByEmail(requestDto.getEmail())).thenReturn(Optional.of(user));
 
         // When/Then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userService.userSignUp(requestDto));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> userService.signUp(requestDto));
         verify(userRepository, times(1)).findByEmail(requestDto.getEmail());
         verify(userRepository, never()).save(any(User.class));
     }
