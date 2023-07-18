@@ -15,7 +15,7 @@ public class Address {
     private String userAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User users;
+    private User user;
 
     @Column(nullable = false)
     private String zipCode;
@@ -23,9 +23,9 @@ public class Address {
     private boolean isDefaultAddress; // 기본 배송지 여부
 
     @Builder
-    public Address(String userAddress, User users, String zipCode) {
+    public Address(String userAddress, User user, String zipCode) {
         this.userAddress = userAddress;
-        this.users = users;
+        this.user = user;
         this.zipCode = zipCode;
         this.isDefaultAddress = false;
     }
