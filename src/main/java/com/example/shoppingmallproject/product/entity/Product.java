@@ -1,6 +1,7 @@
 package com.example.shoppingmallproject.product.entity;
 
 import com.example.shoppingmallproject.orderPayDelivery.entity.OrderPayDelivery;
+import com.example.shoppingmallproject.product.dto.ProductRequestDto;
 import com.example.shoppingmallproject.seller.entity.Seller;
 import com.example.shoppingmallproject.share.TimeStamped;
 import jakarta.persistence.*;
@@ -39,5 +40,20 @@ public class Product extends TimeStamped {
         this.price = price;
         this.stock = stock;
         this.orderPayDelivery = orderPayDelivery;
+    }
+
+    public void setProduct(ProductRequestDto dto){
+        if (dto.getDetail() != null){
+            this.detail = dto.getDetail();
+        }
+        if (dto.getPrice() != null){
+            this.price = dto.getPrice();
+        }
+        if (dto.getName() != null){
+            this.name = dto.getName();
+        }
+        if (dto.getStock() != null){
+            this.stock = dto.getStock();
+        }
     }
 }

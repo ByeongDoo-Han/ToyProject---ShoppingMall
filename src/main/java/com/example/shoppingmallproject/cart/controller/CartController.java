@@ -4,12 +4,11 @@ import com.example.shoppingmallproject.cart.dto.CartRequestDto;
 import com.example.shoppingmallproject.cart.dto.CartsWithProductsDto;
 import com.example.shoppingmallproject.cart.service.CartService;
 import com.example.shoppingmallproject.common.security.userDetails.entity.UserDetailsImpl;
-import com.example.shoppingmallproject.user.entity.User;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
