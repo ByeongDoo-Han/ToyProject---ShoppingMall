@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService{
         String accessToken = jwtUtil.createToken(user.getEmail(), JwtUtil.ACCESS_TOKEN_TIME);
         String refreshToken = jwtUtil.createToken(user.getEmail(), JwtUtil.REFRESH_TOKEN_TIME);
         saveRefreshTokenToRedis(user.getEmail(), refreshToken);
-        return new TokenResponseDto(accessToken, refreshToken);
+        return TokenResponseDto.of(accessToken, refreshToken);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class UserServiceImpl implements UserService{
         String newAccessToken = jwtUtil.createToken(email, JwtUtil.ACCESS_TOKEN_TIME);
         String newRefreshToken = jwtUtil.createToken(email, JwtUtil.REFRESH_TOKEN_TIME);
         saveRefreshTokenToRedis(email, newRefreshToken);
-        return new TokenResponseDto(newAccessToken, newRefreshToken);
+        return TokenResponseDto.of(newAccessToken, newRefreshToken);
     }
 
     private void saveRefreshTokenToRedis(String email, String refreshToken)
