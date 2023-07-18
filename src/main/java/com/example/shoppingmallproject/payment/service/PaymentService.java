@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface PaymentService {
 
-    @Transactional
     void pay(PaymentRequestDto paymentRequestDto);
 
-    @Transactional
     List<PaymentsResultDto> getPayments(User user);
+
+    List<PaymentsResultDto> doCartsPayments(User user);
 }

@@ -39,4 +39,12 @@ public class PaymentServiceImpl implements PaymentService{
                 .payMethod(m.getPayMethod())
                 .build()).collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PaymentsResultDto> doCartsPayments(User user) {
+        Long userId = user.getId();
+
+        return null;
+    }
 }
