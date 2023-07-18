@@ -26,7 +26,7 @@ public class User extends TimeStamped {
     private String password;
     @Column(nullable = false)
     private String phone;
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private Set<Address> address = new LinkedHashSet<>(); // null 값을 허용하지 않는 Hash Set 조회, 삽입, 삭제 다 O(1)
     @OneToMany(mappedBy = "users")
     private List<Payment> payment = new ArrayList<>();
