@@ -24,4 +24,18 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository{
                 .fetch();
     }
 
+    @Override
+    public boolean existsBySellerAndName(String sellerName, String productName){
+        return jpaQueryFactory.selectFrom(product)
+                .where(product.seller.name.eq(sellerName), product.name.eq(productName))
+                .fetchFirst() != null;
+    }
+    @Override
+    public Product getProductWithSeller(Long productId){
+        return jpaQueryFactory.select(product)
+                .from(product)
+                .innerJoin(product.seller)
+                .where(product.id.eq(productId))
+                .fetchFirst();
+    }
 }
