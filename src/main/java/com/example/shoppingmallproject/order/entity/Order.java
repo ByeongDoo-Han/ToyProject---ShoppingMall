@@ -24,5 +24,5 @@ public class Order extends TimeStamped {
     public Order(User user, Long totalPrice) {
         this.user = user;
         this.totalPrice = totalPrice;
-    }
+
 }
