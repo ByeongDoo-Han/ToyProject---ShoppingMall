@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public class GetException extends Throwable {
-    private HttpStatus statusCode;
-    private String errorMessage;
+    private final HttpStatus statusCode;
+    private final String errorMessage;
 
     public GetException(StatusException statusExceptionCode){
         this.statusCode = statusExceptionCode.getStatusCode();
