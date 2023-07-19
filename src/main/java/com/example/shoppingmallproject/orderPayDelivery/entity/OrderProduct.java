@@ -1,7 +1,8 @@
 package com.example.shoppingmallproject.orderPayDelivery.entity;
 
 import com.example.shoppingmallproject.delivery.entity.Delivery;
-import com.example.shoppingmallproject.order.entity.Orders;
+import com.example.shoppingmallproject.order.entity.Order;
+import com.example.shoppingmallproject.payment.entity.Payment;
 import com.example.shoppingmallproject.product.entity.Product;
 import com.example.shoppingmallproject.seller.entity.Seller;
 import com.example.shoppingmallproject.share.TimeStamped;
@@ -19,8 +20,7 @@ public class OrderProduct extends TimeStamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ORDER_ID")
-    private Orders order;
+    private Order order;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seller_id")
     private Seller seller;
@@ -29,7 +29,7 @@ public class OrderProduct extends TimeStamped {
     private Product product;
 
     @Builder
-    public OrderProduct(Orders order, Product product, Seller seller) {
+    public OrderProduct(Order order, Product product, Seller seller) {
         this.order = order;
         this.seller = seller;
         this.product = product;

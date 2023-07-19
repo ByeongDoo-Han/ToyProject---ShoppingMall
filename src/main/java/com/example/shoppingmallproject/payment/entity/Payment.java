@@ -1,6 +1,5 @@
 package com.example.shoppingmallproject.payment.entity;
 
-import com.example.shoppingmallproject.order.entity.Orders;
 import com.example.shoppingmallproject.share.TimeStamped;
 import com.example.shoppingmallproject.user.entity.User;
 import jakarta.persistence.*;
