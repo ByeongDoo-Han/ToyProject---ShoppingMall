@@ -2,7 +2,6 @@ package com.example.shoppingmallproject.orderPayDelivery.entity;
 
 import com.example.shoppingmallproject.delivery.entity.Delivery;
 import com.example.shoppingmallproject.order.entity.Orders;
-import com.example.shoppingmallproject.payment.entity.Payment;
 import com.example.shoppingmallproject.product.entity.Product;
 import com.example.shoppingmallproject.seller.entity.Seller;
 import com.example.shoppingmallproject.share.TimeStamped;
@@ -15,24 +14,24 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class OrderPayDelivery extends TimeStamped {
+public class OrderProduct extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ORDER_ID")
     private Orders order;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Payment payment;
+    @JoinColumn(name = "seller_id")
+    private Seller seller;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Delivery delivery;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Builder
-    public OrderPayDelivery(Orders order, Payment payment, Delivery delivery, Product product) {
+    public OrderProduct(Orders order, Product product, Seller seller) {
         this.order = order;
-        this.payment = payment;
-        this.delivery = delivery;
+        this.seller = seller;
         this.product = product;
     }
 }

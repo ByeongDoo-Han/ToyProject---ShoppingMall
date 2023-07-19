@@ -27,8 +27,8 @@ public class PaymentController {
         return paymentService.doCartsPayments(user);
     }
 
-    @PostMapping("/products/{productsId}/payments") //상품에서 결제
-    public PaymentsResultDto doProductPayments(@PathVariable Long productsId, @AuthenticationPrincipal User user){
-        return paymentService.doProductPayments(user);
-    }
+//    @PostMapping("/products/{productsId}/payments") //상품에서 결제
+//    public PaymentsResultDto doProductPayments(@PathVariable Long productsId, @AuthenticationPrincipal User user){
+//        return paymentService.doProductPayments(user);
+//    }
 }

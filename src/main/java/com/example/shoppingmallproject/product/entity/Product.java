@@ -1,6 +1,5 @@
 package com.example.shoppingmallproject.product.entity;
 
-import com.example.shoppingmallproject.orderPayDelivery.entity.OrderPayDelivery;
 import com.example.shoppingmallproject.product.dto.ProductRequestDto;
 import com.example.shoppingmallproject.seller.entity.Seller;
 import com.example.shoppingmallproject.share.TimeStamped;
@@ -24,22 +23,20 @@ public class Product extends TimeStamped {
     @Column(nullable = false)
     private String detail;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id")
     private Seller seller;
     @Column(nullable = false)
     private Long price;
     @Column(nullable = false)
     private Long stock;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<OrderPayDelivery> orderPayDelivery;
 
     @Builder
-    public Product(String name, String detail, Seller seller, Long price, Long stock, List<OrderPayDelivery> orderPayDelivery) {
+    public Product(String name, String detail, Seller seller, Long price, Long stock) {
         this.name = name;
         this.seller = seller;
         this.detail = detail;
         this.price = price;
         this.stock = stock;
-        this.orderPayDelivery = orderPayDelivery;
     }
 
     public void setProduct(ProductRequestDto dto){
