@@ -18,14 +18,11 @@ public class Order extends TimeStamped {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<OrderPayDelivery> orderPayDelivery;
-    private Long orderPrice;
+    private Long totalPrice;
 
     @Builder
-    public Order(User user, List<OrderPayDelivery> orderPayDelivery, Long orderPrice) {
+    public Order(User user, Long totalPrice) {
         this.user = user;
-        this.orderPayDelivery = orderPayDelivery;
-        this.orderPrice = orderPrice;
-    }
+        this.totalPrice = totalPrice;
+
 }
