@@ -16,12 +16,11 @@ public class Order extends TimeStamped {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(nullable = false)
     private Long totalPrice;
-
-//    @OneToOne(mappedBy = "order")
-//    private Payment payment;
     @Builder
-    public Order(User user) {
+    public Order(User user, Long totalPrice) {
         this.user = user;
+        this.totalPrice = totalPrice;
     }
 }

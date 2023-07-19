@@ -1,12 +1,11 @@
 package com.example.shoppingmallproject.payment.controller;
 
-import com.example.shoppingmallproject.payment.dto.PaymentsResultDto;
+import com.example.shoppingmallproject.payment.dto.PaymentResponseDto;
 import com.example.shoppingmallproject.payment.service.PaymentService;
 import com.example.shoppingmallproject.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +17,12 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @GetMapping("/payments") // 결제내역 확인
-    public List<PaymentsResultDto> getPayments(@AuthenticationPrincipal User user){
+    public List<PaymentResponseDto> getPayments(@AuthenticationPrincipal User user){
         return paymentService.getPayments(user);
     }
 
     @PostMapping("/carts/payments") //장바구니에서 결제
-    public List<PaymentsResultDto> doCartsPayments(@AuthenticationPrincipal User user){
+    public List<PaymentResponseDto> doCartsPayments(@AuthenticationPrincipal User user){
         return paymentService.doCartsPayments(user);
     }
 
