@@ -1,12 +1,9 @@
 package com.example.shoppingmallproject.order.entity;
 
-import com.example.shoppingmallproject.orderPayDelivery.entity.OrderPayDelivery;
 import com.example.shoppingmallproject.share.TimeStamped;
 import com.example.shoppingmallproject.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 
 @Entity
@@ -17,12 +14,14 @@ public class Order extends TimeStamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
     private Long totalPrice;
 
+//    @OneToOne(mappedBy = "order")
+//    private Payment payment;
     @Builder
-    public Order(User user, Long totalPrice) {
+    public Order(User user) {
         this.user = user;
-        this.totalPrice = totalPrice;
-
+    }
 }

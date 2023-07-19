@@ -44,7 +44,8 @@ public class CartServiceImpl implements CartService{
 
         List<Product> products = productService.getProductsByCartIds(cartIds);
 
-        return new CartsWithProductsDto().toDtoList(carts, products);
+//        return new CartsWithProductsDto().toDtoList(carts, products);
+        return  null;
     }
 
     /**
