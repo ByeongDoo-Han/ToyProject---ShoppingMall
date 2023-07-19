@@ -1,10 +1,9 @@
 package com.example.shoppingmallproject.orderPayDelivery.entity;
 
 import com.example.shoppingmallproject.delivery.entity.Delivery;
-import com.example.shoppingmallproject.order.entity.Orders;
+import com.example.shoppingmallproject.order.entity.Order;
 import com.example.shoppingmallproject.payment.entity.Payment;
 import com.example.shoppingmallproject.product.entity.Product;
-import com.example.shoppingmallproject.seller.entity.Seller;
 import com.example.shoppingmallproject.share.TimeStamped;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -20,7 +19,7 @@ public class OrderPayDelivery extends TimeStamped {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Orders order;
+    private Order order;
     @ManyToOne(fetch = FetchType.LAZY)
     private Payment payment;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,7 +28,7 @@ public class OrderPayDelivery extends TimeStamped {
     private Product product;
 
     @Builder
-    public OrderPayDelivery(Orders order, Payment payment, Delivery delivery, Product product) {
+    public OrderPayDelivery(Order order, Payment payment, Delivery delivery, Product product) {
         this.order = order;
         this.payment = payment;
         this.delivery = delivery;
