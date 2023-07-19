@@ -3,10 +3,16 @@ package com.example.shoppingmallproject.orderProduct.entity;
 import com.example.shoppingmallproject.order.entity.Order;
 import com.example.shoppingmallproject.product.entity.Product;
 import com.example.shoppingmallproject.seller.entity.Seller;
+import com.example.shoppingmallproject.share.TimeStamped;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class OrderProduct {
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class OrderProduct extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
