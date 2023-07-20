@@ -58,7 +58,7 @@ class CartServiceImplTest {
         //when
         when(cartRepository.findCartsByUserId(1L)).thenReturn(carts);
         // 1번유저가 카트들을 가질거라고 가정
-        when(productService.getProductsByCartIds(cartIds)).thenReturn(products);
+        when(productService.getUsersProductsByCartIds(cartIds)).thenReturn(products);
         // 카트 아이디들로 검색 후 나오는 프로덕트들이 products 임을 가정
 
         // 실제 수행부분
@@ -71,7 +71,7 @@ class CartServiceImplTest {
         assertEquals("1", result.get(0).getProduct().getName());
         assertEquals("2", result.get(1).getProduct().getName());
 
-        verify(productService, times(1)).getProductsByCartIds(cartIds);
+        verify(productService, times(1)).getUsersProductsByCartIds(cartIds);
         verify(cartRepository, times(1)).findCartsByUserId(1L);
     }
 

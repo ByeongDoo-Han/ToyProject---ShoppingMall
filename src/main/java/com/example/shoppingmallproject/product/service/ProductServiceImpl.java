@@ -1,6 +1,7 @@
 package com.example.shoppingmallproject.product.service;
 
 import com.example.shoppingmallproject.product.dto.ProductRequestDto;
+import com.example.shoppingmallproject.product.dto.ProductResponseDto;
 import com.example.shoppingmallproject.product.entity.Product;
 import com.example.shoppingmallproject.product.repository.ProductRepository;
 import com.example.shoppingmallproject.seller.entity.Seller;
@@ -25,7 +26,7 @@ public class ProductServiceImpl implements ProductService{
     }
     @Transactional(readOnly = true)
     @Override
-    public List<Product> getProductsByCartIds(List<Long> cartIds){
+    public List<Product> getUsersProductsByCartIds(List<Long> cartIds){
         return productRepository.getProductsByCarts(cartIds);
     }
     @Transactional
@@ -71,5 +72,10 @@ public class ProductServiceImpl implements ProductService{
         }
 
         productRepository.delete(product);
+    }
+    @Transactional(readOnly = true)
+    @Override
+    public List<ProductResponseDto> getSellersProducts(Seller seller){
+        return productRepository.getMyProducts(seller.getId());
     }
 }
