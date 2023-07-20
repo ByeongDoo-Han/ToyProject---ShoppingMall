@@ -8,13 +8,13 @@ import lombok.*;
 
 @Entity
 @Getter
+@Table(name = "ORDERS")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends TimeStamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
     @Column(nullable = false)
     private Long totalPrice;
