@@ -8,7 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,7 +26,7 @@ public class Seller extends TimeStamped {
   private String phone;
 
   @OneToMany(fetch = FetchType.LAZY,mappedBy = "seller")
-  private List<Product> products;
+  private Set<Product> products = new LinkedHashSet<>();
 
   @Builder
   public Seller(String name, String email, String password, String phone) {

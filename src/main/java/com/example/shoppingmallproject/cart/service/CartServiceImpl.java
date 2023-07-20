@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -42,7 +41,7 @@ public class CartServiceImpl implements CartService{
                 .map(Cart::getId)
                 .collect(Collectors.toList());
 
-        List<Product> products = productService.getProductsByCartIds(cartIds);
+        List<Product> products = productService.getUsersProductsByCartIds(cartIds);
 
 //        return new CartsWithProductsDto().toDtoList(carts, products);
         return  null;

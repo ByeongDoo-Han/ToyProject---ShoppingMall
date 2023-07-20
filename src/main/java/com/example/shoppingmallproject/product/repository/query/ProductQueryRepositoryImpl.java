@@ -1,6 +1,8 @@
 package com.example.shoppingmallproject.product.repository.query;
 
 import com.example.shoppingmallproject.cart.entity.QCart;
+import com.example.shoppingmallproject.product.dto.ProductResponseDto;
+import com.example.shoppingmallproject.product.dto.QProductResponseDto;
 import com.example.shoppingmallproject.product.entity.Product;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +39,12 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository{
                 .innerJoin(product.seller)
                 .where(product.id.eq(productId))
                 .fetchFirst();
+    }
+    @Override
+    public List<ProductResponseDto> getMyProducts(Long sellerId){
+        return jpaQueryFactory.select(new QProductResponseDto(product.id, product.name, product.detail, product.price, product.stock))
+                .from(product)
+                .where(product.seller.id.eq(sellerId))
+                .fetch();
     }
 }

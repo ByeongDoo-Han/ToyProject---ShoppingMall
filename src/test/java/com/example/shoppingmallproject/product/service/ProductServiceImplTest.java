@@ -60,7 +60,7 @@ class ProductServiceImplTest {
         List<Product> expectedProducts = Arrays.asList(new Product(), new Product(), new Product());
         when(productRepository.getProductsByCarts(cartIds)).thenReturn(expectedProducts);
 
-        List<Product> actualProducts = productService.getProductsByCartIds(cartIds);
+        List<Product> actualProducts = productService.getUsersProductsByCartIds(cartIds);
 
         assertNotNull(actualProducts);
         assertEquals(expectedProducts, actualProducts);
@@ -94,6 +94,11 @@ class ProductServiceImplTest {
         when(dto.getName()).thenReturn("이름22");
 
         productService.updateProduct(seller, 1L, dto);
+
+    }
+
+    @Test
+    void getSellersProductsTest(){
 
     }
 }
