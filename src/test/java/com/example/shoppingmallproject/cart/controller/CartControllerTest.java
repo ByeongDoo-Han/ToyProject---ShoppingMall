@@ -46,7 +46,8 @@ public class CartControllerTest {
         userDetails = mock(UserDetailsImpl.class);
         when(user.getId()).thenReturn(1L); // 유저의 아이디는 1로
         when(userDetails.getUser()).thenReturn(user);  // userDetailsImpl 에서 getUSER() 호출 시 위 유저 반환하도록 설정
-
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, null, null));
     }
 
     // TODO: 2023/07/18 해당 부분은 userDetails 가져오는 부분이 완성되면, 다시 테스트 하겠습니다.
