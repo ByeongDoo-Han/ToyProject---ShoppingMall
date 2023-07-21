@@ -27,23 +27,21 @@ public class CartController {
      */
     @GetMapping("/carts")
     public ResponseEntity<List<CartsWithProductsDto>> getCartsWithProducts(@AuthenticationPrincipal UserDetailsImpl user) {
-        try {
-            List<CartsWithProductsDto> cartsWithProducts = cartService.getCartsWithProducts(user.getUser().getId());
-            return ResponseEntity.ok(cartsWithProducts);
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.noContent().build();
-        }
+
+        List<CartsWithProductsDto> cartsWithProducts = cartService.getCartsWithProducts(user.getUser().getId());
+        if (cartsWithProducts.isEmpty()) return ResponseEntity.noContent().build();
+        else return ResponseEntity.ok(cartsWithProducts);
     }
 
     @PostMapping("/carts")
-    public ResponseEntity<String> createCart(@RequestBody CartRequestDto dto, @AuthenticationPrincipal UserDetailsImpl userDetails, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<String> createCart(@RequestBody CartRequestDto dto, @AuthenticationPrincipal UserDetailsImpl userDetails, UriComponentsBuilder uriBuilder) {
         try {
             Long cartId = cartService.createCart(dto, userDetails.getUser());
             URI location = uriBuilder.path("/carts/{id}").buildAndExpand(cartId).toUri();
             return ResponseEntity.created(location).build();
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("상품이 이미 장바구니에 있습니다.");
-        } catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾으시는 상품이 존재하지 않습니다.");
         }
     }
