@@ -27,6 +27,16 @@ public class RedisDAO {
         this.objectMapper = objectMapper;
     }
 
+    public void simpleSetValue(String key, String value, Duration duration) {
+        ValueOperations<String, String> values = redisTemplate.opsForValue();
+        values.set(key, value, duration);
+    }
+
+    public String simpleGetValue(String key){
+        ValueOperations<String, String> values = redisTemplate.opsForValue();
+        return values.get(key);
+    }
+
     public void setValues(String key, Object data, Duration duration) throws JsonProcessingException {
         ValueOperations<String, String> values = redisTemplate.opsForValue();
         String serializedData = objectMapper.writeValueAsString(data); // 객체를 JSON 문자열로 직렬화
