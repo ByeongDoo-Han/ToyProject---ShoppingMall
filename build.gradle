@@ -71,6 +71,9 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.mockito:mockito-core:5.3.1'
     testImplementation 'com.google.code.gson:gson:2.10.1'
+
+    //test for redis with docker-container
+    testImplementation "org.testcontainers:testcontainers:1.17.6"
 }
 
 tasks.named('test') {
