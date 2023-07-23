@@ -5,4 +5,5 @@ import com.example.shoppingmallproject.product.repository.query.ProductQueryRepo
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, ProductQueryRepository {
+
 }

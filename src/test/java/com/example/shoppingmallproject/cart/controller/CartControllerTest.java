@@ -9,6 +9,7 @@ import com.example.shoppingmallproject.user.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @WebMvcTest(CartController.class)
 @MockBean(JpaMetamodelMappingContext.class)
@@ -72,7 +74,9 @@ public class CartControllerTest {
         // Act & Assert
         mockMvc.perform(MockMvcRequestBuilders.get("/carts")
                         .contentType(MediaType.APPLICATION_JSON))
+
                 .andExpect(MockMvcResultMatchers.status().isOk());
+
 
         verify(cartService, times(1)).getCartsWithProducts(userId);
     }

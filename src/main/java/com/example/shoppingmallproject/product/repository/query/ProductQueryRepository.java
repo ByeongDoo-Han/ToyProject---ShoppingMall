@@ -14,4 +14,6 @@ public interface ProductQueryRepository {
     Product getProductWithSeller(Long productId);
 
     List<ProductResponseDto> getMyProducts(Long sellerId);
+
+    Product getProductById(Long productId);
 }
