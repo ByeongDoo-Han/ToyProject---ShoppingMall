@@ -6,6 +6,7 @@ import com.example.shoppingmallproject.seller.entity.Seller;
 import com.example.shoppingmallproject.share.TimeStamped;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +27,17 @@ public class OrderProduct extends TimeStamped {
     private Integer quantity;
     @Column(nullable = false)
     private Long totalPrice;
+
     @Enumerated(value = EnumType.STRING)
     private OrderStatusEnum orderStatus;
+
+    @Builder
+    public OrderProduct(Order order, Product product, Seller seller, Integer quantity, Long totalPrice, OrderStatusEnum orderStatus) {
+        this.order = order;
+        this.product = product;
+        this.seller = seller;
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+        this.orderStatus = orderStatus;
+    }
 }
