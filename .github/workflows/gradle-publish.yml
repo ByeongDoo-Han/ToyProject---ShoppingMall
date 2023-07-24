@@ -17,7 +17,7 @@ env:
   SPRING_PROFILES_ACTIVE: test
   
 jobs:
-  build:
+  hi:
 
     runs-on: ubuntu-latest
     permissions:
