@@ -1,6 +1,5 @@
 package com.example.shoppingmallproject.order.entity;
 
-import com.example.shoppingmallproject.orderProduct.entity.OrderStatusEnum;
 import com.example.shoppingmallproject.share.TimeStamped;
 import com.example.shoppingmallproject.user.entity.User;
 import jakarta.persistence.*;
@@ -19,17 +18,9 @@ public class Order extends TimeStamped {
     private User user;
     @Column(nullable = false)
     private Long totalPrice;
-    @Column(nullable = false)
-    private Integer quantity;
-
-    @Column(nullable = false)
-    @Enumerated(value = EnumType.STRING)
-    private OrderStatusEnum status;
     @Builder
-    public Order(User user, Long totalPrice, Integer quantity) {
+    public Order(User user, Long totalPrice) {
         this.user = user;
         this.totalPrice = totalPrice;
-        this.status= OrderStatusEnum.PROGRESSING;
-        this.quantity = quantity;
     }
 }
