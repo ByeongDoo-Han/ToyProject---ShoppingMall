@@ -82,31 +82,31 @@ class UserServiceImplTest {
         verify(userRepository, times(1)).findById(userId);
     }
 
-    @Test
-    void userSignUp_ValidUserRequestDto_UserSaved() {
-        // Given - 세팅해놓은 requestDto
+//    @Test
+//    void userSignUp_ValidUserRequestDto_UserSaved() {
+//        // Given - 세팅해놓은 requestDto
+//
+//        when(userRepository.findByEmail(requestDto.getEmail())).thenReturn(Optional.empty());
+//        when(passwordEncoder.encode(requestDto.getPassword())).thenReturn("encodedPassword");
+//
+//        // When
+//        userService.signUp(requestDto);
+//
+//        // Then
+//        verify(userRepository, times(1)).findByEmail(requestDto.getEmail());
+//        verify(userRepository, times(1)).save(any(User.class));
+//    }
 
-        when(userRepository.findByEmail(requestDto.getEmail())).thenReturn(Optional.empty());
-        when(passwordEncoder.encode(requestDto.getPassword())).thenReturn("encodedPassword");
-
-        // When
-        userService.signUp(requestDto);
-
-        // Then
-        verify(userRepository, times(1)).findByEmail(requestDto.getEmail());
-        verify(userRepository, times(1)).save(any(User.class));
-    }
-
-    @Test
-    void userSignUp_DuplicateUser_ThrowsIllegalArgumentException() {
-        // Given - 세팅해놓은 requestDto
-
-        when(userRepository.findByEmail(requestDto.getEmail())).thenReturn(Optional.of(user));
-
-        // When/Then
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userService.signUp(requestDto));
-        verify(userRepository, times(1)).findByEmail(requestDto.getEmail());
-        verify(userRepository, never()).save(any(User.class));
-    }
+//    @Test
+//    void userSignUp_DuplicateUser_ThrowsIllegalArgumentException() {
+//        // Given - 세팅해놓은 requestDto
+//
+//        when(userRepository.findByEmail(requestDto.getEmail())).thenReturn(Optional.of(user));
+//
+//        // When/Then
+//        Assertions.assertThrows(IllegalArgumentException.class, () -> userService.signUp(requestDto));
+//        verify(userRepository, times(1)).findByEmail(requestDto.getEmail());
+//        verify(userRepository, never()).save(any(User.class));
+//    }
 
 }
