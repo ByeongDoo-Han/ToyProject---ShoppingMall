@@ -17,6 +17,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
+application-fake.properties
 .idea
 *.iws
 *.iml
