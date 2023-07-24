@@ -5,5 +5,4 @@ import com.example.shoppingmallproject.orderProduct.repository.query.OrderProduc
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface OrderProductRepository extends JpaRepository<OrderProduct, Long>, OrderProductQueryRepository {
-    void findByProductId(Long productsId);
 }

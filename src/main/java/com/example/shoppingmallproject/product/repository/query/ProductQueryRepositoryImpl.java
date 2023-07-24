@@ -47,12 +47,4 @@ public class ProductQueryRepositoryImpl implements ProductQueryRepository{
                 .where(product.seller.id.eq(sellerId))
                 .fetch();
     }
-
-    @Override
-    public Product getProductById(Long productId) {
-        return jpaQueryFactory.select(product)
-            .from(product)
-            .where(product.id.eq(productId))
-            .fetchFirst();
-    }
 }
