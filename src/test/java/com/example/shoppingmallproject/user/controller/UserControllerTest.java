@@ -41,59 +41,59 @@ class UserControllerTest {
     private String password = "password";
     private String phone ="1234";
 
-//    @Test
-//
-//    void userSignUpTest() throws Exception {
-//
-//        //given
-//        given(userController.signUp(SignUpRequestDto.builder()
-//            .username(username)
-//            .password(password)
-//            .email(email)
-//            .phone(phone)
-//            .build())
-//        )
-//            .willReturn(
-//                new ResponseEntity<UserResponseDto>(
-//                    UserResponseDto.of(
-//                                        User.builder()
-//                                            .username(username)
-//                                            .password(password)
-//                                            .email(email)
-//                                            .phone(phone)
-//                                            .build()), HttpStatus.CREATED
-//                                ));
-//
-//        //when
-//        User user1 = User.builder()
-//            .username(username)
-//            .password(password)
-//            .email(email)
-//            .phone(phone)
-//            .build();
-//        UserResponseDto userResponseDto = UserResponseDto.of(user1);
-//        SignUpRequestDto signUpRequestDto = SignUpRequestDto.builder()
-//            .username(username)
-//            .email(email)
-//            .password(password)
-//            .phone(phone)
-//            .build();
-//
-//        Gson gson = new Gson();
-//        String content = gson.toJson(userResponseDto);
-//
-//        mockMvc.perform(
-//            post("/users/signup")
-//                .content(content)
-//                .contentType(MediaType.APPLICATION_JSON))
-//            .andExpect(status().isCreated())
-//            .andExpect(jsonPath("$.username").exists())
-//            .andExpect(jsonPath("$.email").exists())
-//            .andExpect(jsonPath("$.password").exists())
-//            .andExpect(jsonPath("$.phone").exists())
-//            .andDo(print());
-//
-//        verify(userController).signUp(signUpRequestDto);
-//    }
+    @Test
+
+    void userSignUpTest() throws Exception {
+
+        //given
+        given(userController.signUp(SignUpRequestDto.builder()
+            .username(username)
+            .password(password)
+            .email(email)
+            .phone(phone)
+            .build())
+        )
+            .willReturn(
+                new ResponseEntity<UserResponseDto>(
+                    UserResponseDto.of(
+                                        User.builder()
+                                            .username(username)
+                                            .password(password)
+                                            .email(email)
+                                            .phone(phone)
+                                            .build()), HttpStatus.CREATED
+                                ));
+
+        //when
+        User user1 = User.builder()
+            .username(username)
+            .password(password)
+            .email(email)
+            .phone(phone)
+            .build();
+        UserResponseDto userResponseDto = UserResponseDto.of(user1);
+        SignUpRequestDto signUpRequestDto = SignUpRequestDto.builder()
+            .username(username)
+            .email(email)
+            .password(password)
+            .phone(phone)
+            .build();
+
+        Gson gson = new Gson();
+        String content = gson.toJson(userResponseDto);
+
+        mockMvc.perform(
+            post("/users/signup")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.username").exists())
+            .andExpect(jsonPath("$.email").exists())
+            .andExpect(jsonPath("$.password").exists())
+            .andExpect(jsonPath("$.phone").exists())
+            .andDo(print());
+
+        verify(userController).signUp(signUpRequestDto);
+    }
 
 }
