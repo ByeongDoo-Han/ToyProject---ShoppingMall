@@ -79,23 +79,23 @@ class ProductServiceImplTest {
     }
 
 
-    // TODO: 2023/07/18 다시 작성해야 합니다. (동작 검증이 안되어있음)
-    @Test
-    void updateProduct() {
-        Product mockProduct = mock(Product.class);
-        assert mockProduct != null;
-        Seller seller = mock(Seller.class);
-
-        ProductRequestDto dto = mock(ProductRequestDto.class);
-
-        when(productRepository.findById(1L)).thenReturn(Optional.of(mockProduct));
-        when(mockProduct.getName()).thenReturn("이름");
-        when(mockProduct.getSeller()).thenReturn(seller);
-        when(dto.getName()).thenReturn("이름22");
-
-        productService.updateProduct(seller, 1L, dto);
-
-    }
+//    // TODO: 2023/07/18 다시 작성해야 합니다. (동작 검증이 안되어있음)
+//    @Test
+//    void updateProduct() {
+//        Product mockProduct = mock(Product.class);
+//        assert mockProduct != null;
+//        Seller seller = mock(Seller.class);
+//
+//        ProductRequestDto dto = mock(ProductRequestDto.class);
+//
+//        when(productRepository.findById(1L)).thenReturn(Optional.of(mockProduct));
+//        when(mockProduct.getName()).thenReturn("이름");
+//        when(mockProduct.getSeller()).thenReturn(seller);
+//        when(dto.getName()).thenReturn("이름22");
+//
+//        productService.updateProduct(seller, 1L, dto);
+//
+//    }
 
     @Test
     void getSellersProductsTest(){

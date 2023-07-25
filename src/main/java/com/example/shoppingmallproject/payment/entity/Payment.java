@@ -36,9 +36,10 @@ public class Payment extends TimeStamped {
     }
 
     @Builder
-    public Payment(Long totalPrice, String payMethod, Long payNumber) {
+    public Payment(Long totalPrice, String payMethod, Long payNumber, User users) {
         this.totalPrice = totalPrice;
         this.payMethod = payMethod;
         this.payNumber = payNumber;
+        this.users = users;
     }
 }
