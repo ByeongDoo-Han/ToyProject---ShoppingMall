@@ -86,14 +86,14 @@ class UserServiceImplTest {
     void userSignUp_ValidUserRequestDto_UserSaved() {
         // Given - 세팅해놓은 requestDto
 
-        when(userRepository.findByEmail(requestDto.getEmail())).thenReturn(Optional.empty());
+        when(userRepository.existsByEmail(requestDto.getEmail())).thenReturn(false);
         when(passwordEncoder.encode(requestDto.getPassword())).thenReturn("encodedPassword");
 
         // When
         userService.signUp(requestDto);
 
         // Then
-        verify(userRepository, times(1)).findByEmail(requestDto.getEmail());
+        verify(userRepository, times(1)).existsByEmail(requestDto.getEmail());
         verify(userRepository, times(1)).save(any(User.class));
     }
 
@@ -101,11 +101,11 @@ class UserServiceImplTest {
     void userSignUp_DuplicateUser_ThrowsIllegalArgumentException() {
         // Given - 세팅해놓은 requestDto
 
-        when(userRepository.findByEmail(requestDto.getEmail())).thenReturn(Optional.of(user));
+        when(userRepository.existsByEmail(requestDto.getEmail())).thenReturn(true);
 
         // When/Then
         Assertions.assertThrows(IllegalArgumentException.class, () -> userService.signUp(requestDto));
-        verify(userRepository, times(1)).findByEmail(requestDto.getEmail());
+        verify(userRepository, times(1)).existsByEmail(requestDto.getEmail());
         verify(userRepository, never()).save(any(User.class));
     }
 
