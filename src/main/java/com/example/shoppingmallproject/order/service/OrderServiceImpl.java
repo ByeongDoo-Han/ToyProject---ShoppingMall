@@ -1,9 +1,13 @@
 package com.example.shoppingmallproject.order.service;
 
+import com.example.shoppingmallproject.common.exceptions.CustomException;
+import com.example.shoppingmallproject.common.exceptions.ErrorCode;
 import com.example.shoppingmallproject.order.dto.OrderDetailsDto;
 import com.example.shoppingmallproject.order.dto.OrderRequestDto;
+import com.example.shoppingmallproject.order.dto.OrderResponseDto;
 import com.example.shoppingmallproject.order.entity.Order;
 import com.example.shoppingmallproject.order.repository.OrderRepository;
+import com.example.shoppingmallproject.orderProduct.dto.OrderProductResponseDto;
 import com.example.shoppingmallproject.orderProduct.service.OrderProductService;
 import com.example.shoppingmallproject.product.entity.Product;
 import com.example.shoppingmallproject.product.service.ProductService;
@@ -42,6 +46,15 @@ public class OrderServiceImpl implements OrderService{
         return order.getId();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public OrderResponseDto getOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ORDER));
+        List<OrderProductResponseDto> orderProductResponseDtos =orderProductService.getOrderProductDtos(orderId);
+        return OrderResponseDto.of(order, orderProductResponseDtos);
+    }
+
     private Long calculateTotalPrice(List<OrderDetailsDto> orderDetailsDtos, Map<Long, Product> productMap) {
         long totalPrice = 0L;
         for (OrderDetailsDto dto: orderDetailsDtos){
@@ -54,9 +67,8 @@ public class OrderServiceImpl implements OrderService{
     private void createOrderProducts(List<OrderDetailsDto> orderDetailsDtos, Map<Long, Product> productMap, Order order){
         for (OrderDetailsDto detailsDto: orderDetailsDtos){
             Product product = productMap.get(detailsDto.getProductId());
-            Long eachTotalPrice = detailsDto.getQuantity() * product.getPrice();
-            orderProductService.createOrderProduct(order, product, product.getSeller(),
-                    detailsDto.getQuantity(), eachTotalPrice);
+            orderProductService.createOrderProduct(order, product, detailsDto.getQuantity(), product.getPrice());
         }
     }
+
 }
