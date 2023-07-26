@@ -78,4 +78,10 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductResponseDto> getSellersProducts(Seller seller){
         return productRepository.getMyProducts(seller.getId());
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Product> getProductsByIds(List<Long> productIds) {
+        return productRepository.findAllByIdIn(productIds);
+    }
 }

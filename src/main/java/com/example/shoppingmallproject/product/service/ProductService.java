@@ -12,6 +12,8 @@ public interface ProductService {
 
     Product getProductById(Long productId);
 
+    List<Product> getProductsByIds(List<Long> productIds);
+
     List<Product> getUsersProductsByCartIds(List<Long> cartIds);
 
     Long createProduct(Seller seller, ProductRequestDto dto);
