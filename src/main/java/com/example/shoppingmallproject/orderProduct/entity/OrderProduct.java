@@ -1,7 +1,6 @@
 package com.example.shoppingmallproject.orderProduct.entity;
 
 import com.example.shoppingmallproject.order.entity.Order;
-import com.example.shoppingmallproject.order.entity.OrderStatusEnum;
 import com.example.shoppingmallproject.product.entity.Product;
 import com.example.shoppingmallproject.seller.entity.Seller;
 import com.example.shoppingmallproject.share.TimeStamped;
@@ -22,21 +21,18 @@ public class OrderProduct extends TimeStamped {
     private Order order;
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Seller seller;
     @Column(nullable = false)
     private Integer quantity;
     @Column(nullable = false)
-    private Long totalPrice;
+    private Long unitPrice;
 
     //    기능 고도화 단계에서 OrderProduct에 Enum 추가하겠습니다. (결제, 배송 Enum)
     //    private OrderStatusEnum orderStatus;
     @Builder
-    public OrderProduct(Order order, Product product, Seller seller, Integer quantity, Long totalPrice) {
+    public OrderProduct(Order order, Product product, Integer quantity, Long unitPrice) {
         this.order = order;
         this.product = product;
-        this.seller = seller;
         this.quantity = quantity;
-        this.totalPrice = totalPrice;
+        this.unitPrice = unitPrice;
     }
 }
