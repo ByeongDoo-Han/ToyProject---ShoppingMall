@@ -30,7 +30,11 @@ public enum ErrorCode {
     NOT_FOUND_USER(HttpStatus.NOT_FOUND, "회원을 찾을 수 없습니다."),
 
     // 상품 관련 ErrorCode
-    NOT_FOUND_PRODUCT(HttpStatus.NOT_FOUND, "해당 상품을 찾을 수 없습니다.");
+    NOT_FOUND_PRODUCT(HttpStatus.NOT_FOUND, "해당 상품을 찾을 수 없습니다."),
+
+    // 주문 관련 ErrorCode
+    NOT_FOUND_ORDER(HttpStatus.NOT_FOUND, "해당 주문을 찾을 수 없습니다."),
+    NOT_FOUND_ORDER_PRODUCT(HttpStatus.NOT_FOUND, "해당 상세주문을 찾을 수 없습니다.");
 
 
     private final HttpStatus httpStatus;
