@@ -1,5 +1,7 @@
 package com.example.shoppingmallproject.product.entity;
 
+import com.example.shoppingmallproject.common.exceptions.CustomException;
+import com.example.shoppingmallproject.common.exceptions.ErrorCode;
 import com.example.shoppingmallproject.product.dto.ProductRequestDto;
 import com.example.shoppingmallproject.seller.entity.Seller;
 import com.example.shoppingmallproject.share.TimeStamped;
@@ -52,5 +54,9 @@ public class Product extends TimeStamped {
         if (dto.getStock() != null){
             this.stock = dto.getStock();
         }
+    }
+    public void reduceStock(Long quantity){
+        if((stock - quantity) < 0) throw new CustomException(ErrorCode.SHORTAGE_PRODUCT_STOCK);
+        stock -= quantity;
     }
 }

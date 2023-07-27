@@ -29,17 +29,16 @@ public class OrderServiceImpl implements OrderService{
     private final OrderProductService orderProductService;
     private final ProductService productService;
 
-    // TODO: Product의 stock(재고) 차감 시점을 언제로 할지 정책을 정해야합니다.
     @Override
     @Transactional
     public Long createOrder(OrderRequestDto dto, User user) {
         List<Product> products = productService.getProductsByIds(dto.getProductIds());
         Map<Long, Product> productMap = products.stream()
                 .collect(Collectors.toMap(Product::getId, Function.identity()));
-        Long totalPrice = calculateTotalPrice(dto.getOrderDetailsDtos(), productMap);
+        reduceProductsStock(dto.getOrderDetailsDtos(), productMap);
         Order order = Order.builder()
                 .user(user)
-                .totalPrice(totalPrice)
+                .totalPrice(calculateTotalPrice(dto.getOrderDetailsDtos(), productMap))
                 .build();
         orderRepository.save(order);
         createOrderProducts(dto.getOrderDetailsDtos(), productMap, order);
@@ -71,4 +70,10 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
+    private void reduceProductsStock(List<OrderDetailsDto> orderDetailsDtos, Map<Long, Product> productMap){
+        for (OrderDetailsDto detailsDto: orderDetailsDtos){
+            Product product = productMap.get(detailsDto.getProductId());
+            product.reduceStock(detailsDto.getQuantity());
+        }
+    }
 }
