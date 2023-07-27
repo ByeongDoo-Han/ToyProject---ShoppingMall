@@ -31,6 +31,7 @@ public enum ErrorCode {
 
     // 상품 관련 ErrorCode
     NOT_FOUND_PRODUCT(HttpStatus.NOT_FOUND, "해당 상품을 찾을 수 없습니다."),
+    SHORTAGE_PRODUCT_STOCK(HttpStatus.CONFLICT, "상품의 재고가 부족합니다."),
 
     // 주문 관련 ErrorCode
     NOT_FOUND_ORDER(HttpStatus.NOT_FOUND, "해당 주문을 찾을 수 없습니다."),
