@@ -6,9 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-@Entity
+@Entity(name = "orders")
 @Getter
-@Table(name = "ORDERS")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order extends TimeStamped {
     @Id

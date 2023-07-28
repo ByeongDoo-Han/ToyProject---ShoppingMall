@@ -5,8 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-@Entity
-@Table(name = "USERS")
+@Entity(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends TimeStamped {
