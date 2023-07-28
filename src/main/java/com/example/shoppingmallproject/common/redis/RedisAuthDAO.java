@@ -2,7 +2,7 @@ package com.example.shoppingmallproject.common.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,12 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
 public class RedisAuthDAO {
 
     private final RedisTemplate<String, String> redisTemplate;
-    private final HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
+    private final HashOperations<String, String, String> hashOperations;
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    public RedisAuthDAO(@Qualifier("redisTemplate") RedisTemplate<String, String> redisTemplate1, RedisTemplate<String, String> redisTemplate) {
+        this.redisTemplate = redisTemplate1;
+        this.hashOperations = redisTemplate.opsForHash();
+    }
 
     /**
      *
