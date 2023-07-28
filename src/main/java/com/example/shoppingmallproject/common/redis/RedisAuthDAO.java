@@ -14,12 +14,10 @@ import java.util.List;
 @Repository
 public class RedisAuthDAO {
 
-    private final RedisTemplate<String, String> redisTemplate;
     private final HashOperations<String, String, String> hashOperations;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public RedisAuthDAO(@Qualifier("redisTemplate") RedisTemplate<String, String> redisTemplate1, RedisTemplate<String, String> redisTemplate) {
-        this.redisTemplate = redisTemplate1;
+    public RedisAuthDAO(RedisTemplate<String, String> redisTemplate, HashOperations<String, String, String> hashOperations) {
         this.hashOperations = redisTemplate.opsForHash();
     }
 
