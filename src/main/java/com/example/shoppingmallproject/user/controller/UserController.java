@@ -45,9 +45,9 @@ public class UserController {
     }
 
     @PostMapping("/user/signin")
-    public TokenResponseDto signIn(@RequestBody SignInRequestDto signInRequestDto)
+    public TokenResponseDto signIn(@RequestBody SignInRequestDto signInRequestDto, @RequestParam String browser)
         throws JsonProcessingException {
-        return userService.signIn(signInRequestDto);
+        return userService.signIn(signInRequestDto, browser);
     }
 
     @PostMapping("/user/signout")
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @PostMapping("user/reissue")
-    public TokenResponseDto reissue(HttpServletRequest httpServletRequest, @RequestBody String browser)
+        public TokenResponseDto reissue(HttpServletRequest httpServletRequest, @RequestParam String browser)
         throws JsonProcessingException {
         String refreshToken = JwtUtil.resolveToken(httpServletRequest, JwtUtil.REFRESH_HEADER);
         return userService.reissue(refreshToken, browser);

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public interface UserService  {
     UserResponseDto getUserById(Long userId);
     UserResponseDto signUp(SignUpRequestDto signUpRequestDto);
-    TokenResponseDto signIn(SignInRequestDto signInRequestDto) throws JsonProcessingException;
+    TokenResponseDto signIn(SignInRequestDto signInRequestDto, String browser) throws JsonProcessingException;
     void signOut(String email);
     TokenResponseDto reissue(String refreshToken, String browser) throws JsonProcessingException;
 }

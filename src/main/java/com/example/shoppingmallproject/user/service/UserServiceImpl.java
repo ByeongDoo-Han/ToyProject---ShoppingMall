@@ -17,7 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public TokenResponseDto signIn(SignInRequestDto signInRequestDto) throws JsonProcessingException {
+    public TokenResponseDto signIn(SignInRequestDto signInRequestDto, String browser) throws JsonProcessingException {
         // 보안을 위해 아이디&비밀번호 관련 응답은 통일되게 설정하였음.
         User user = userRepository.findByEmail(signInRequestDto.getEmail())
             .orElseThrow(() -> new IllegalArgumentException("아이디와 비밀번호를 확인해주세요"));
@@ -61,7 +63,7 @@ public class UserServiceImpl implements UserService{
         }
         String accessToken = jwtUtil.createToken(user.getEmail(), JwtUtil.ACCESS_TOKEN_TIME);
         String refreshToken = jwtUtil.createToken(user.getEmail(), JwtUtil.REFRESH_TOKEN_TIME);
-        saveRefreshTokenToRedis(user.getEmail(), refreshToken, signInRequestDto.getBrowser());
+        saveRefreshTokenToRedis(user.getEmail(), refreshToken, browser);
         return TokenResponseDto.of(accessToken, refreshToken);
     }
 
@@ -75,7 +77,7 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public TokenResponseDto reissue(String refreshToken, String browser) throws JsonProcessingException {
         String email = jwtUtil.getLoginIdFromToken(refreshToken);
-        if(!isSameRefreshTokenInRedis(email, refreshToken)){
+        if(!isSameRefreshTokenInRedis(email, browser, refreshToken)){
             throw new IllegalArgumentException("토큰 불일치");
         }
         String newAccessToken = jwtUtil.createToken(email, JwtUtil.ACCESS_TOKEN_TIME);
@@ -91,13 +93,12 @@ public class UserServiceImpl implements UserService{
         redisAuthDAO.storeRefreshToken(email, browser, refreshToken,Duration.ofMillis(JwtUtil.REFRESH_TOKEN_TIME)) ;
     }
 
-    private boolean isSameRefreshTokenInRedis(String email, String refreshToken)
+    private boolean isSameRefreshTokenInRedis(String email, String browser, String refreshToken)
         throws JsonProcessingException {
-        String redisRefreshToken = redisDAO.getValues(email, String.class);
-        if (redisRefreshToken != null){
-            return redisRefreshToken.equals(refreshToken);
-        }
-        return false;
+        redisAuthDAO.isRefreshTokenExpired(email, browser, System.currentTimeMillis());
+        List<Object> refreshTokenData = redisAuthDAO.getRefreshTokenData(email, browser);
+        String o = (String) refreshTokenData.get(1);
+        String substring = o.substring(7);
+        return refreshToken.equals(substring);
     }
-
 }
