@@ -45,7 +45,7 @@ public class RedisAuthDAO {
         try {
             String refreshTokenDataString = objectMapper.writeValueAsString(refreshTokenData);
             // List<Object> 형태를 String으로 형변환 (Serializer)
-            Objects.requireNonNull(redisTemplate.getConnectionFactory()).getConnection().serverCommands().flushAll();
+//            Objects.requireNonNull(redisTemplate.getConnectionFactory()).getConnection().serverCommands().flushAll();
 //            redisTemplate.opsForHash().put(userEmail, browser, refreshTokenDataString);
             hashOperations.put(userEmail, browser, refreshTokenDataString);
             // userEmail 은 Redis 의 키, browser 는 해쉬키(키 안의 키), 위에서 직렬화한 데이터 = 밸류
@@ -64,7 +64,7 @@ public class RedisAuthDAO {
      */
     public boolean isRefreshTokenExpired(String userEmail, String browser, long currentTime) {
         List<Object> refreshTokenData = getRefreshTokenData(userEmail, browser);
-        return refreshTokenData != null && currentTime >= (long) refreshTokenData.get(2);
+        return refreshTokenData != null && currentTime >= Long.valueOf((Integer) refreshTokenData.get(2));
     }
 
     /**
