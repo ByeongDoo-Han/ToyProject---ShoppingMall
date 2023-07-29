@@ -11,6 +11,6 @@ public interface UserService  {
     UserResponseDto signUp(SignUpRequestDto signUpRequestDto);
     TokenResponseDto signIn(SignInRequestDto signInRequestDto) throws JsonProcessingException;
     void signOut(String email);
-    TokenResponseDto reissue(String refreshToken) throws JsonProcessingException;
+    TokenResponseDto reissue(String refreshToken, String browser) throws JsonProcessingException;
 }
 

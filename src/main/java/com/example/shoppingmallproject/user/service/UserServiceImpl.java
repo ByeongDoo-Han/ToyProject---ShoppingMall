@@ -1,5 +1,6 @@
 package com.example.shoppingmallproject.user.service;
 
+import com.example.shoppingmallproject.common.redis.RedisAuthDAO;
 import com.example.shoppingmallproject.common.redis.RedisDAO;
 import com.example.shoppingmallproject.common.security.jwt.JwtUtil;
 import com.example.shoppingmallproject.user.dto.SignInRequestDto;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService{
     private final PasswordEncoder passwordEncoder;
     private final RedisDAO redisDAO;
     private final JwtUtil jwtUtil;
+    private final RedisAuthDAO redisAuthDAO;
 
     @Override
     @Transactional(readOnly = true)
@@ -59,7 +61,7 @@ public class UserServiceImpl implements UserService{
         }
         String accessToken = jwtUtil.createToken(user.getEmail(), JwtUtil.ACCESS_TOKEN_TIME);
         String refreshToken = jwtUtil.createToken(user.getEmail(), JwtUtil.REFRESH_TOKEN_TIME);
-        saveRefreshTokenToRedis(user.getEmail(), refreshToken);
+        saveRefreshTokenToRedis(user.getEmail(), refreshToken, signInRequestDto.getBrowser());
         return TokenResponseDto.of(accessToken, refreshToken);
     }
 
@@ -71,21 +73,22 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public TokenResponseDto reissue(String refreshToken) throws JsonProcessingException {
+    public TokenResponseDto reissue(String refreshToken, String browser) throws JsonProcessingException {
         String email = jwtUtil.getLoginIdFromToken(refreshToken);
         if(!isSameRefreshTokenInRedis(email, refreshToken)){
             throw new IllegalArgumentException("토큰 불일치");
         }
         String newAccessToken = jwtUtil.createToken(email, JwtUtil.ACCESS_TOKEN_TIME);
         String newRefreshToken = jwtUtil.createToken(email, JwtUtil.REFRESH_TOKEN_TIME);
-        saveRefreshTokenToRedis(email, newRefreshToken);
+        saveRefreshTokenToRedis(email, newRefreshToken, browser);
         return TokenResponseDto.of(newAccessToken, newRefreshToken);
     }
 
-    private void saveRefreshTokenToRedis(String email, String refreshToken)
+    private void saveRefreshTokenToRedis(String email, String refreshToken, String browser)
         throws JsonProcessingException {
-        redisDAO.setValues(email, refreshToken.substring(7),
-            Duration.ofMillis(JwtUtil.REFRESH_TOKEN_TIME));
+//        redisDAO.setValues(email, refreshToken.substring(7),
+//            Duration.ofMillis(JwtUtil.REFRESH_TOKEN_TIME));
+        redisAuthDAO.storeRefreshToken(email, browser, refreshToken,Duration.ofMillis(JwtUtil.REFRESH_TOKEN_TIME)) ;
     }
 
     private boolean isSameRefreshTokenInRedis(String email, String refreshToken)

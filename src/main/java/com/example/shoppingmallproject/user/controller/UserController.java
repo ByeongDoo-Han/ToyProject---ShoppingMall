@@ -57,9 +57,9 @@ public class UserController {
     }
 
     @PostMapping("user/reissue")
-    public TokenResponseDto reissue(HttpServletRequest httpServletRequest)
+    public TokenResponseDto reissue(HttpServletRequest httpServletRequest, @RequestBody String browser)
         throws JsonProcessingException {
         String refreshToken = JwtUtil.resolveToken(httpServletRequest, JwtUtil.REFRESH_HEADER);
-        return userService.reissue(refreshToken);
+        return userService.reissue(refreshToken, browser);
     }
 }
