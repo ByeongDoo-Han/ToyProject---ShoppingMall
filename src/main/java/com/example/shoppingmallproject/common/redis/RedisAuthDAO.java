@@ -2,24 +2,33 @@ package com.example.shoppingmallproject.common.redis;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Repository;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class RedisAuthDAO {
-
+    private final RedisTemplate<String, String> redisTemplate;
     private final HashOperations<String, String, String> hashOperations;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
-    public RedisAuthDAO(RedisTemplate<String, String> redisTemplate, HashOperations<String, String, String> hashOperations) {
-        this.hashOperations = redisTemplate.opsForHash();
+    public RedisAuthDAO(RedisTemplate<String, String> redisTemplate, HashOperations<String, String, String> hashOperations, ObjectMapper objectMapper) {
+        this.redisTemplate = redisTemplate;
+        this.hashOperations = hashOperations;
+        this.objectMapper = objectMapper;
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer(StandardCharsets.UTF_8));
+        redisTemplate.setHashValueSerializer(new StringRedisSerializer(StandardCharsets.UTF_8));
     }
+
 
     /**
      *
@@ -36,6 +45,8 @@ public class RedisAuthDAO {
         try {
             String refreshTokenDataString = objectMapper.writeValueAsString(refreshTokenData);
             // List<Object> 형태를 String으로 형변환 (Serializer)
+            Objects.requireNonNull(redisTemplate.getConnectionFactory()).getConnection().serverCommands().flushAll();
+//            redisTemplate.opsForHash().put(userEmail, browser, refreshTokenDataString);
             hashOperations.put(userEmail, browser, refreshTokenDataString);
             // userEmail 은 Redis 의 키, browser 는 해쉬키(키 안의 키), 위에서 직렬화한 데이터 = 밸류
             // 따라서 레디스에서 -> HashOperations.get(userEmail, HashKey(==browser)) 하면 저 안의 밸류 가져올 수 있음.
