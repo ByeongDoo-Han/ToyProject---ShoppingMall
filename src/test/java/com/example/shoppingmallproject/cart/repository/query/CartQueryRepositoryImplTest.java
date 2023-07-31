@@ -25,9 +25,7 @@ class CartQueryRepositoryImplTest {
 
     @Test
     void whenListsAreNull(){
-        /**
-         * assertDoesNotThrow 및 Throws 는 1st Argument 로 "Executable" 을 넣어줘야 합니다. 따라서 람다식으로 작성했습니다.
-         */
+        //assertDoesNotThrow 및 Throws 는 1st Argument 로 "Executable" 을 넣어줘야 합니다. 따라서 람다식으로 작성했습니다.
         assertDoesNotThrow(() -> {
             List<Cart> cartsByUserId = cartRepository.findCartsByUserId(1L);
             assertEquals(0, cartsByUserId.size());
